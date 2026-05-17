@@ -59,21 +59,23 @@ export function Preloader() {
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, filter: "drop-shadow(0 0 0px rgba(37,99,235,0))" }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   scale: 1,
                   filter: [
-                    "drop-shadow(0 0 15px rgba(37,99,235,0.4))", 
-                    "drop-shadow(0 0 60px rgba(99,102,241,0.85))", 
+                    "drop-shadow(0 0 15px rgba(37,99,235,0.4))",
+                    "drop-shadow(0 0 60px rgba(99,102,241,0.85))",
                     "drop-shadow(0 0 15px rgba(37,99,235,0.4))"
-                  ]
+                  ],
+                  backgroundPosition: ["0% center", "200% center", "0% center"]
                 }}
-                transition={{ 
+                transition={{
                   opacity: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
                   scale: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-                  filter: { repeat: Infinity, duration: 2, ease: "easeInOut" }
+                  filter: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+                  backgroundPosition: { repeat: Infinity, duration: 3, ease: "linear" }
                 }}
-                className="font-syne font-black text-white"
+                className="font-syne font-black bg-gradient-to-r from-white via-[#818cf8] to-white bg-[length:200%_auto] bg-clip-text text-transparent"
                 style={{ fontSize: "15vw", letterSpacing: "-0.04em", lineHeight: 1 }}
               >
                 TC
