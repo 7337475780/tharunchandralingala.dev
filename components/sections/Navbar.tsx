@@ -90,27 +90,30 @@ export function Navbar() {
                 <button
                   key={link.name}
                   onClick={() => scrollToSection(link.href)}
-                  className={`relative px-4 py-2 font-dm-sans text-[14px] transition-colors rounded-full z-10 cursor-pointer ${isActive
-                      ? "text-white font-semibold drop-shadow-sm"
+                  className={`relative px-4 py-2 font-dm-sans text-[14px] transition-all duration-300 rounded-full z-10 cursor-pointer ${
+                    isActive
+                      ? "text-[var(--accent)] font-bold tracking-wide drop-shadow-sm scale-105"
                       : "text-[var(--muted2)] hover:text-[var(--text)]"
                     }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="liquid-glass-pill"
-                      className="absolute inset-0 rounded-full z-[-1] overflow-hidden"
+                      className="absolute inset-0 rounded-full z-[-1] overflow-hidden bg-[var(--surface)]/70 backdrop-blur-xl border border-[var(--border2)]"
                       style={{
-                        background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
-                        boxShadow: "0 4px 15px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
+                        boxShadow: "inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -2px 3px rgba(0,0,0,0.1), 0 10px 25px rgba(0,0,0,0.15), 0 0 20px rgba(37,99,235,0.15)",
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 420,
-                        damping: 32,
-                        mass: 0.7,
+                        stiffness: 450,
+                        damping: 30,
+                        mass: 0.8,
                       }}
                     >
-                      <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
+                      {/* Top Specular Water Rim Reflection */}
+                      <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full" />
+                      {/* Bottom Liquid Glow */}
+                      <span className="absolute bottom-[1px] left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent rounded-full" />
                     </motion.div>
                   )}
                   {link.name}
@@ -165,20 +168,21 @@ export function Navbar() {
                     <button
                       key={link.name}
                       onClick={() => { scrollToSection(link.href); setMobileMenuOpen(false); }}
-                      className={`relative px-4 py-3 font-dm-sans text-[16px] rounded-[12px] z-10 transition-colors w-full text-left cursor-pointer ${isActive ? "text-white font-medium" : "text-[var(--text)]"
+                      className={`relative px-4 py-3 font-dm-sans text-[16px] rounded-[12px] z-10 transition-all duration-300 w-full text-left cursor-pointer ${
+                        isActive ? "text-[var(--accent)] font-bold tracking-wide" : "text-[var(--text)]"
                         }`}
                     >
                       {isActive && (
                         <motion.div
                           layoutId="mobile-liquid-pill"
-                          className="absolute inset-0 rounded-[12px] z-[-1] overflow-hidden"
+                          className="absolute inset-0 rounded-[12px] z-[-1] overflow-hidden bg-[var(--surface)]/70 backdrop-blur-xl border border-[var(--border2)]"
                           style={{
-                            background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
-                            boxShadow: "0 4px 15px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
+                            boxShadow: "inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -2px 3px rgba(0,0,0,0.1), 0 10px 25px rgba(0,0,0,0.15)",
                           }}
-                          transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.7 }}
+                          transition={{ type: "spring", stiffness: 450, damping: 30, mass: 0.8 }}
                         >
-                          <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
+                          <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full" />
+                          <span className="absolute bottom-[1px] left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent rounded-full" />
                         </motion.div>
                       )}
                       {link.name}
@@ -197,7 +201,7 @@ export function Navbar() {
         </AnimatePresence>
       </header>
 
-      {/* Go To Top Button */}
+      {/* Go To Top Button (Liquid Glass Droplet) */}
       <AnimatePresence>
         {showGoTop && (
           <motion.button
@@ -208,16 +212,18 @@ export function Navbar() {
             transition={{ type: "spring", stiffness: 400, damping: 28 }}
             onClick={scrollToTop}
             aria-label="Go to top"
-            className="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(37,99,235,0.5)] transition-shadow duration-300"
+            className="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden bg-[var(--surface)]/70 backdrop-blur-xl border border-[var(--border2)] shadow-2xl hover:scale-110 transition-all duration-300 group"
             style={{
-              background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
-              boxShadow: "0 8px 25px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
+              boxShadow: "inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -2px 3px rgba(0,0,0,0.1), 0 10px 25px rgba(0,0,0,0.15), 0 0 20px rgba(37,99,235,0.2)",
             }}
             whileHover={{ scale: 1.12 }}
             whileTap={{ scale: 0.92 }}
           >
-            <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
-            <ChevronUp size={22} className="text-white drop-shadow-md font-bold" />
+            {/* Top Specular Rim Reflection */}
+            <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full" />
+            {/* Bottom Ambient Glow */}
+            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent rounded-full" />
+            <ChevronUp size={22} className="text-[var(--accent)] drop-shadow-md font-bold group-hover:-translate-y-0.5 transition-transform duration-300" />
           </motion.button>
         )}
       </AnimatePresence>
