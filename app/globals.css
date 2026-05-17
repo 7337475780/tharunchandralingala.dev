@@ -1,26 +1,219 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-syne: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-dm-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* We define the variables in :root (and html[data-theme="dark"]) below and map them here */
+  --color-background: var(--bg);
+  --color-bg2: var(--bg2);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface2);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent2);
+  --color-accent3: var(--accent3);
+  --color-text-main: var(--text);
+  --color-muted: var(--muted);
+  --color-muted2: var(--muted2);
+  --color-border-main: var(--border);
+  --color-border2: var(--border2);
+  --color-success: var(--green);
+  --color-warning: var(--yellow);
+  --color-error: var(--red);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-typewriter: typewriter 3s steps(40, end), blink .75s step-end infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-spin-slow-reverse: spin-reverse 22s linear infinite;
+  --animate-bounce-subtle: bounceSubtle 2s infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes typewriter {
+    from {
+      width: 0
+    }
+
+    to {
+      width: 100%
+    }
+  }
+
+  @keyframes blink {
+
+    from,
+    to {
+      border-color: transparent
+    }
+
+    50% {
+      border-color: var(--accent)
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-18px);
+    }
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes bounceSubtle {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+
+    40% {
+      transform: translateY(-6px);
+    }
+
+    60% {
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+
+    100% {
+      background-position: 1000px 0;
+    }
   }
 }
 
+:root,
+html[data-theme="light"] {
+  --bg: #f0f4ff;
+  --bg2: #e8edf8;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --accent: #2563eb;
+  --accent2: #0891b2;
+  --accent3: #7c3aed;
+  --text: #0f172a;
+  --muted: #64748b;
+  --muted2: #475569;
+  --border: rgba(0, 0, 0, 0.08);
+  --border2: rgba(0, 0, 0, 0.14);
+  --green: #059669;
+  --yellow: #d97706;
+  --red: #dc2626;
+}
+
+html[data-theme="dark"] {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --surface: #16161f;
+  --surface2: #1e1e2e;
+  --accent: #4f8ef7;
+  --accent2: #00d4ff;
+  --accent3: #a78bfa;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --muted2: #94a3b8;
+  --border: rgba(255, 255, 255, 0.07);
+  --border2: rgba(255, 255, 255, 0.13);
+  --green: #10b981;
+  --yellow: #f59e0b;
+  --red: #ef4444;
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-dm-sans);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-syne {
+  font-family: var(--font-syne);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+/* Base utility for gradient text */
+.text-gradient {
+  background: linear-gradient(to right, var(--accent), var(--accent2), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation utilities for IntersectionObserver */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+.animate-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
