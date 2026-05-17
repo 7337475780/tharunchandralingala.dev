@@ -23,11 +23,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tharunchandralingala.dev"),
   title: "Tharun Chandra Lingala | Full Stack Developer — React, Next.js, TypeScript",
   description: "Frontend-focused Full Stack Developer from Andhra Pradesh, India. Building real-time apps, AI-powered platforms and scalable UIs. Open to full-time roles.",
   keywords: ["Full Stack Developer Andhra Pradesh", "React Developer India", "Next.js Developer", "TypeScript Developer", "Tharun Chandra Lingala"],
   alternates: {
-    canonical: "https://tharun-portfolio.vercel.app", // Adjust to final URL
+    canonical: "https://tharunchandralingala.dev",
   },
   openGraph: {
     images: [

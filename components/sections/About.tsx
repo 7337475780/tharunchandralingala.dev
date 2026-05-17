@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { TextReveal } from "@/components/TextReveal";
+import { MagicCard } from "@/components/MagicCard";
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -55,21 +56,25 @@ export function About() {
                 { value: "7.57", label: "CGPA / 10" },
                 { value: "73.59%", label: "LeetCode acceptance" },
               ].map((stat, i) => (
-                <div key={i} className="bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-5 flex flex-col justify-center">
-                  <span className="font-syne text-[32px] font-[800] text-gradient mb-1 leading-none">{stat.value}</span>
-                  <span className="font-mono text-[12px] text-[var(--muted)]">{stat.label}</span>
-                </div>
+                <MagicCard key={i}>
+                  <div className="p-6 flex flex-col justify-center h-full">
+                    <span className="font-syne text-[32px] font-[800] text-gradient mb-1 leading-none">{stat.value}</span>
+                    <span className="font-mono text-[12px] text-[var(--muted)]">{stat.label}</span>
+                  </div>
+                </MagicCard>
               ))}
             </div>
 
-            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-4 flex items-center justify-center overflow-hidden">
-              <img 
-                src="https://github-readme-stats.vercel.app/api?username=7337475780&show_icons=true&theme=transparent&hide_border=true&title_color=4f8ef7&icon_color=00d4ff&text_color=94a3b8" 
-                alt="GitHub Contribution Stats" 
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
+            <MagicCard>
+              <div className="p-4 flex items-center justify-center overflow-hidden w-full h-full">
+                <img 
+                  src="https://github-readme-stats.vercel.app/api?username=7337475780&show_icons=true&theme=transparent&hide_border=true&title_color=4f8ef7&icon_color=00d4ff&text_color=94a3b8" 
+                  alt="GitHub Contribution Stats" 
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </MagicCard>
           </div>
         </div>
       </div>

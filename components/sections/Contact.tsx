@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Code2 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { TextReveal } from "@/components/TextReveal";
+import { MagicCard } from "@/components/MagicCard";
 
 export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -81,45 +82,53 @@ export function Contact() {
 
           {/* Left: Contact Info */}
           <div className="flex flex-col gap-4">
-            <a href="mailto:tharunlingala6@gmail.com" className="group bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-4 md:p-5 flex items-center gap-5 hover:border-[var(--accent)] transition-colors">
-              <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-                <Mail size={24} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">Email</span>
-                <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">tharunlingala6@gmail.com</span>
-              </div>
-            </a>
+            <MagicCard>
+              <a href="mailto:tharunlingala6@gmail.com" className="group p-4 md:p-5 flex items-center gap-5 w-full h-full">
+                <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                  <Mail size={24} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">Email</span>
+                  <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">tharunlingala6@gmail.com</span>
+                </div>
+              </a>
+            </MagicCard>
 
-            <Link href="https://github.com/7337475780" target="_blank" className="group bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-4 md:p-5 flex items-center gap-5 hover:border-[var(--accent)] transition-colors">
-              <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-                <FaGithub size={24} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">GitHub</span>
-                <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">github.com/7337475780</span>
-              </div>
-            </Link>
+            <MagicCard>
+              <Link href="https://github.com/7337475780" target="_blank" className="group p-4 md:p-5 flex items-center gap-5 w-full h-full">
+                <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                  <FaGithub size={24} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">GitHub</span>
+                  <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">github.com/7337475780</span>
+                </div>
+              </Link>
+            </MagicCard>
 
-            <Link href="https://www.linkedin.com/in/tharun-chandra-lingala-bba016309/" target="_blank" className="group bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-4 md:p-5 flex items-center gap-5 hover:border-[var(--accent)] transition-colors">
-              <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-                <FaLinkedin size={24} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">LinkedIn</span>
-                <span className="font-dm-sans text-[15px] font-medium text-[var(--text)] overflow-hidden text-ellipsis whitespace-nowrap">/in/tharun-chandra-lingala-bba016309</span>
-              </div>
-            </Link>
+            <MagicCard>
+              <Link href="https://www.linkedin.com/in/tharun-chandra-lingala-bba016309/" target="_blank" className="group p-4 md:p-5 flex items-center gap-5 w-full h-full">
+                <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                  <FaLinkedin size={24} />
+                </div>
+                <div className="flex flex-col overflow-hidden">
+                  <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">LinkedIn</span>
+                  <span className="font-dm-sans text-[15px] font-medium text-[var(--text)] truncate">/in/tharun-chandra-lingala</span>
+                </div>
+              </Link>
+            </MagicCard>
 
-            <Link href="https://leetcode.com/u/Tharunchandralingala" target="_blank" className="group bg-[var(--surface)] border border-[var(--border)] rounded-[12px] p-4 md:p-5 flex items-center gap-5 hover:border-[var(--accent)] transition-colors">
-              <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-                <Code2 size={24} />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">LeetCode</span>
-                <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">leetcode.com/u/Tharunchandralingala</span>
-              </div>
-            </Link>
+            <MagicCard>
+              <Link href="https://leetcode.com/u/Tharunchandralingala" target="_blank" className="group p-4 md:p-5 flex items-center gap-5 w-full h-full">
+                <div className="w-12 h-12 rounded-[10px] bg-[var(--bg2)] flex items-center justify-center text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                  <Code2 size={24} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider mb-1">LeetCode</span>
+                  <span className="font-dm-sans text-[15px] font-medium text-[var(--text)]">leetcode.com/u/Tharunchandralingala</span>
+                </div>
+              </Link>
+            </MagicCard>
           </div>
 
           {/* Right: Form */}
