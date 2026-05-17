@@ -54,35 +54,52 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Outer trailing circle */}
+      {/* Outer trailing liquid glass droplet */}
       <motion.div
-        className="fixed top-0 left-0 w-[36px] h-[36px] border-[1.5px] border-white rounded-full pointer-events-none z-[9999] flex items-center justify-center mix-blend-difference hidden md:flex"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99999] hidden md:flex items-center justify-center overflow-hidden border"
+        style={{
+          width: 44,
+          height: 44,
+          marginLeft: -22,
+          marginTop: -22,
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+        }}
         animate={{
-          x: mousePosition.x - 18,
-          y: mousePosition.y - 18,
-          scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? "rgba(255, 255, 255, 0.1)" : "transparent",
+          x: mousePosition.x,
+          y: mousePosition.y,
+          scale: isHovering ? 1.6 : 1,
+          backgroundColor: isHovering ? "rgba(255, 255, 255, 0.18)" : "rgba(255, 255, 255, 0.06)",
+          borderColor: isHovering ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 0.2)",
+          boxShadow: isHovering 
+            ? "inset 0 2px 4px rgba(255,255,255,0.8), inset 0 -2px 4px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.3), 0 0 25px rgba(37,99,235,0.5)"
+            : "inset 0 1px 2px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.1)",
         }}
         transition={{
           type: "spring",
-          stiffness: 150,
-          damping: 15,
-          mass: 0.2,
+          stiffness: 180,
+          damping: 20,
+          mass: 0.3,
         }}
-      />
-      {/* Inner dot */}
+      >
+        {/* Specular top rim highlight */}
+        <span className="absolute top-[2px] left-[8px] right-[8px] h-[2px] bg-gradient-to-r from-transparent via-white/90 to-transparent rounded-full" />
+      </motion.div>
+
+      {/* Inner precise glowing LED core */}
       <motion.div
-        className="fixed top-0 left-0 w-[6px] h-[6px] bg-white rounded-full pointer-events-none z-[10000] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[100000] hidden md:block bg-gradient-to-r from-[#00d4ff] to-[#2563eb] shadow-[0_0_10px_#00d4ff]"
+        style={{ width: 8, height: 8, marginLeft: -4, marginTop: -4 }}
         animate={{
-          x: mousePosition.x - 3,
-          y: mousePosition.y - 3,
+          x: mousePosition.x,
+          y: mousePosition.y,
           scale: isHovering ? 0 : 1,
         }}
         transition={{
           type: "spring",
-          stiffness: 600,
-          damping: 30,
-          mass: 0.1,
+          stiffness: 800,
+          damping: 28,
+          mass: 0.05,
         }}
       />
     </>

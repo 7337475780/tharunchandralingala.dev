@@ -116,10 +116,23 @@ export function Preloader() {
                 />
               </div>
 
-              {/* Label */}
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
-                Loading portfolio
-              </p>
+              {/* Animated Label Stream */}
+              <div className="font-mono text-[11px] uppercase tracking-[0.3em] flex gap-1 overflow-hidden select-none">
+                {["L","O","A","D","I","N","G"," ","P","O","R","T","F","O","L","I","O"].map((char, i) => char === " " ? <span key={i} className="w-2" /> : (
+                  <motion.span
+                    key={i}
+                    initial={{ y: 8, opacity: 0 }}
+                    animate={{ y: [0, -3, 0], opacity: [0.3, 1, 0.4] }}
+                    transition={{
+                      y: { repeat: Infinity, duration: 1.4, delay: i * 0.06, ease: "easeInOut" },
+                      opacity: { repeat: Infinity, duration: 1.4, delay: i * 0.06, ease: "easeInOut" },
+                    }}
+                    className={i < 7 ? "text-[var(--accent2)] font-bold drop-shadow-[0_0_8px_var(--accent2)]" : "text-white/60"}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         )}
