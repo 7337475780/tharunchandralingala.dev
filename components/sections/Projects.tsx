@@ -97,9 +97,12 @@ export function Projects() {
     <section id="projects" ref={sectionRef} className="py-[100px] px-[8%] bg-[var(--bg2)] animate-fade-up">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
-            // projects
-          </span>
+          <div className="flex items-center gap-4 mb-4">
+            <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--yellow)]/10 border border-[var(--yellow)]/30 text-[var(--yellow)] font-bold tracking-[0.15em] uppercase">
+              CHAPTER 03 // PROJECTS AS SYSTEMS
+            </span>
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--yellow)]/30 to-transparent" />
+          </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <TextReveal 

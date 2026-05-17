@@ -64,9 +64,12 @@ export function Skills() {
     <section id="skills" ref={sectionRef} className="py-[100px] px-[8%] bg-[var(--bg)] animate-fade-up">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
-            // tech stack
-          </span>
+          <div className="flex items-center gap-4 mb-4">
+            <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/30 text-[var(--green)] font-bold tracking-[0.15em] uppercase">
+              CHAPTER 02 // PROBLEMS I SOLVE
+            </span>
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--green)]/30 to-transparent" />
+          </div>
           <TextReveal 
             text="What I build with" 
             className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4" 

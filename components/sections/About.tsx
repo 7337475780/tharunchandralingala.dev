@@ -25,9 +25,12 @@ export function About() {
   return (
     <section id="about" ref={sectionRef} className="py-[100px] px-[8%] bg-[var(--bg2)] animate-fade-up">
       <div className="max-w-7xl mx-auto">
-        <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
-          // about me
-        </span>
+        <div className="flex items-center gap-4 mb-4">
+          <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[var(--accent)] font-bold tracking-[0.15em] uppercase">
+            CHAPTER 01 // WHO I AM
+          </span>
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--accent)]/30 to-transparent" />
+        </div>
         <TextReveal 
           text="Passionate about building things that matter" 
           className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-12" 

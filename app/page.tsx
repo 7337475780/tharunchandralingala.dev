@@ -16,12 +16,14 @@ import { Certifications } from "@/components/sections/Certifications";
 import { Blog } from "@/components/sections/Blog";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
+import { StoryNavigation } from "@/components/StoryNavigation";
 
 export default function Home() {
   return (
     <>
       <ProgressBar />
       <TerminalModal />
+      <StoryNavigation />
       
       <AvailabilityBanner />
       <Navbar />
