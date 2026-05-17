@@ -18,48 +18,28 @@ import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Initial load overlay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
-      {loading && (
-        <div className="fixed inset-0 z-[1000] bg-[var(--bg)] flex items-center justify-center transition-opacity duration-500">
-          <div className="font-syne text-[40px] font-[800] text-gradient animate-pulse">
-            TC.
-          </div>
-        </div>
-      )}
+      <ProgressBar />
+      <TerminalModal />
       
-      <div className={`transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
-        <ProgressBar />
-        <TerminalModal />
-        
-        <AvailabilityBanner />
-        <Navbar />
-        
-        <main>
-          <Hero />
-          <TechMarquee />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <LeetCode />
-          <Certifications />
-          <Blog />
-          <Contact />
-        </main>
-        
-        <Footer />
-      </div>
+      <AvailabilityBanner />
+      <Navbar />
+      
+      <main>
+        <Hero />
+        <TechMarquee />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <LeetCode />
+        <Certifications />
+        <Blog />
+        <Contact />
+      </main>
+      
+      <Footer />
     </>
   );
 }

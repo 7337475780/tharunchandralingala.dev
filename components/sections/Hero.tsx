@@ -109,12 +109,16 @@ export function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 w-full">
             <Magnetic strength={0.2}>
-              <Link
-                href="#projects"
-                className="flex items-center justify-center h-[48px] rounded-[12px] bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white font-dm-sans font-medium px-8 hover:-translate-y-[2px] hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all"
+              <button
+                type="button"
+                onClick={() => {
+                  history.replaceState(null, "", window.location.pathname + "#projects");
+                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="flex items-center justify-center h-[48px] rounded-[12px] bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white font-dm-sans font-medium px-8 hover:-translate-y-[2px] hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all cursor-pointer border-0"
               >
                 View My Work
-              </Link>
+              </button>
             </Magnetic>
             <Magnetic strength={0.2}>
               <Link

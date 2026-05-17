@@ -58,9 +58,21 @@ export function Preloader() {
             {/* Absolute centered TC — perfectly aligns with reveal mask */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                initial={{ opacity: 0, scale: 0.95, filter: "drop-shadow(0 0 0px rgba(37,99,235,0))" }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  filter: [
+                    "drop-shadow(0 0 15px rgba(37,99,235,0.4))", 
+                    "drop-shadow(0 0 60px rgba(99,102,241,0.85))", 
+                    "drop-shadow(0 0 15px rgba(37,99,235,0.4))"
+                  ]
+                }}
+                transition={{ 
+                  opacity: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+                  scale: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+                  filter: { repeat: Infinity, duration: 2, ease: "easeInOut" }
+                }}
                 className="font-syne font-black text-white"
                 style={{ fontSize: "15vw", letterSpacing: "-0.04em", lineHeight: 1 }}
               >
