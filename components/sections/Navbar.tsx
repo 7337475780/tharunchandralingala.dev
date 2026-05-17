@@ -91,22 +91,17 @@ export function Navbar() {
                   key={link.name}
                   onClick={() => scrollToSection(link.href)}
                   className={`relative px-4 py-2 font-dm-sans text-[14px] transition-colors rounded-full z-10 cursor-pointer ${isActive
-                      ? "text-white font-medium"
+                      ? "text-white font-semibold drop-shadow-sm"
                       : "text-[var(--muted2)] hover:text-[var(--text)]"
                     }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="liquid-glass-pill"
-                      className="absolute inset-0 rounded-full z-[-1]"
+                      className="absolute inset-0 rounded-full z-[-1] overflow-hidden"
                       style={{
-                        background:
-                          "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%)",
-                        backdropFilter: "blur(12px)",
-                        WebkitBackdropFilter: "blur(12px)",
-                        border: "1px solid rgba(255,255,255,0.22)",
-                        boxShadow:
-                          "inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(255,255,255,0.08), 0 0 14px rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.15)",
+                        background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
+                        boxShadow: "0 4px 15px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
                       }}
                       transition={{
                         type: "spring",
@@ -115,8 +110,7 @@ export function Navbar() {
                         mass: 0.7,
                       }}
                     >
-                      <span className="absolute top-0 left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
-                      <span className="absolute inset-0 rounded-full bg-gradient-to-b from-white/10 to-transparent" />
+                      <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
                     </motion.div>
                   )}
                   {link.name}
@@ -177,19 +171,14 @@ export function Navbar() {
                       {isActive && (
                         <motion.div
                           layoutId="mobile-liquid-pill"
-                          className="absolute inset-0 rounded-[12px] z-[-1]"
+                          className="absolute inset-0 rounded-[12px] z-[-1] overflow-hidden"
                           style={{
-                            background:
-                              "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%)",
-                            backdropFilter: "blur(12px)",
-                            WebkitBackdropFilter: "blur(12px)",
-                            border: "1px solid rgba(255,255,255,0.22)",
-                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.55)",
+                            background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
+                            boxShadow: "0 4px 15px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
                           }}
                           transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.7 }}
                         >
-                          <span className="absolute top-0 left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
-                          <span className="absolute inset-0 rounded-[12px] bg-gradient-to-b from-white/10 to-transparent" />
+                          <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
                         </motion.div>
                       )}
                       {link.name}
