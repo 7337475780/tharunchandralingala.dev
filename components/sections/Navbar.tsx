@@ -208,20 +208,16 @@ export function Navbar() {
             transition={{ type: "spring", stiffness: 400, damping: 28 }}
             onClick={scrollToTop}
             aria-label="Go to top"
-            className="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer"
+            className="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(37,99,235,0.5)] transition-shadow duration-300"
             style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.06) 100%)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.25)",
-              boxShadow:
-                "inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.25), 0 0 20px rgba(255,255,255,0.06)",
+              background: "linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%)",
+              boxShadow: "0 8px 25px rgba(37,99,235,0.35), inset 0 1px 2px rgba(255,255,255,0.4)",
             }}
             whileHover={{ scale: 1.12 }}
             whileTap={{ scale: 0.92 }}
           >
-            <span className="absolute top-0 left-2 right-2 h-[1px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
-            <ChevronUp size={20} className="text-white drop-shadow-sm" />
+            <span className="absolute top-[1px] left-3 right-3 h-[1.5px] bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full" />
+            <ChevronUp size={22} className="text-white drop-shadow-md font-bold" />
           </motion.button>
         )}
       </AnimatePresence>
