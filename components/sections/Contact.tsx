@@ -72,9 +72,9 @@ export function Contact() {
             </span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--red)]/30 to-transparent" />
           </div>
-          <TextReveal 
-            text="Let's build something great together" 
-            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4" 
+          <TextReveal
+            text="Let's build something great together"
+            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4"
           />
           <p className="font-dm-sans text-[16px] text-[var(--muted2)] max-w-2xl">
             I'm actively looking for full-time roles. Whether you have a position, a project, or just want to say hello — my inbox is always open.

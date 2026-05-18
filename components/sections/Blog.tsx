@@ -62,9 +62,9 @@ export function Blog() {
           <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
             // dev notes
           </span>
-          <TextReveal 
-            text="Writing & thoughts" 
-            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4" 
+          <TextReveal
+            text="Writing & thoughts"
+            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4"
           />
           <p className="font-dm-sans text-[16px] text-[var(--muted2)]">
             I write about things I build, bugs I solve, and lessons I learn.
@@ -99,8 +99,8 @@ export function Blog() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {articles.map((article) => (
-              <Link 
-                key={article.id} 
+              <Link
+                key={article.id}
                 href={article.url}
                 target="_blank"
                 className="group bg-[var(--surface)] border border-[var(--border)] rounded-[16px] p-6 hover:-translate-y-1 hover:border-[var(--border2)] hover:shadow-lg transition-all duration-200 flex flex-col h-full"
@@ -112,11 +112,11 @@ export function Blog() {
                     </span>
                   ))}
                 </div>
-                
+
                 <h3 className="font-syne text-[20px] font-[700] text-[var(--text)] mb-4 group-hover:text-[var(--accent)] transition-colors">
                   {article.title}
                 </h3>
-                
+
                 <div className="mt-auto flex items-center justify-between">
                   <div className="font-mono text-[11px] text-[var(--muted)]">
                     {new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} &middot; {article.reading_time_minutes} min read

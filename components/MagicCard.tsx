@@ -34,7 +34,7 @@ export function MagicCard({ children, className = "" }: MagicCardProps) {
 
   return (
     <div className="perspective-[1000px] h-full">
-      <div 
+      <div
         ref={divRef}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setOpacity(1)}
@@ -48,13 +48,13 @@ export function MagicCard({ children, className = "" }: MagicCardProps) {
       >
         {/* The animated spinning border */}
         <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,var(--accent)_0%,var(--accent2)_50%,var(--accent)_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
-        
+
         {/* The static border (when not hovering) */}
         <div className="absolute inset-0 rounded-[20px] border border-[var(--border)] group-hover:border-transparent transition-colors duration-500 z-10" />
 
         {/* The actual content card mask */}
         <div className={`relative h-full w-full bg-[var(--surface)] rounded-[19px] z-20 flex flex-col ${className}`}>
-          
+
           {/* Glow around cursor inside the card */}
           <div
             className="pointer-events-none absolute -inset-px transition-opacity duration-500 z-0 rounded-[19px]"

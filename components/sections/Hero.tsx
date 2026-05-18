@@ -217,7 +217,7 @@ export function Hero() {
                 className="relative w-[180px] h-[180px] rounded-full overflow-hidden shadow-2xl mb-4 pointer-events-auto"
               >
                 {/* Changed to avatar.png so you can use a background-removed image */}
-                <img src="/avatar.jpeg" alt="Tharun" className="w-full h-full object-cover scale-110" />
+                <img src="/avatar.png" alt="Tharun" className="w-full h-full object-cover scale-110" />
               </motion.div>
 
               <h3 className="font-syne text-[22px] font-[700] text-white drop-shadow-md mb-1">Tharun Chandra</h3>

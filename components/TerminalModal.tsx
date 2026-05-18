@@ -134,14 +134,14 @@ export function TerminalModal() {
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
-      
+
       {/* Terminal Window */}
       <div className="relative w-full max-w-[640px] bg-[var(--surface)] border border-[var(--border2)] rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[400px]">
-        
+
         {/* Header */}
         <div className="flex items-center px-4 py-3 bg-[var(--surface2)] border-b border-[var(--border2)]">
           <div className="flex gap-2 mr-4">
@@ -156,7 +156,7 @@ export function TerminalModal() {
         </div>
 
         {/* Content */}
-        <div 
+        <div
           ref={scrollRef}
           className="flex-1 overflow-y-auto p-4 font-mono text-[13px] text-[var(--muted2)] flex flex-col gap-3"
           onClick={() => inputRef.current?.focus()}

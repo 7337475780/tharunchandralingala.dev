@@ -9,12 +9,7 @@ import { Magnetic } from "@/components/Magnetic";
 export function Footer() {
   const openTerminal = (e: React.MouseEvent) => {
     e.preventDefault();
-    const event = new KeyboardEvent('keydown', {
-      key: 'k',
-      ctrlKey: true,
-      bubbles: true
-    });
-    window.dispatchEvent(event);
+    window.dispatchEvent(new CustomEvent("open-terminal-modal"));
   };
 
   const scrollToSection = (href: string) => {
@@ -33,10 +28,10 @@ export function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[100px] bg-[var(--accent)]/5 blur-[80px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
-        
+
         {/* Main Footer Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center justify-between pb-10 border-b border-[var(--border)]">
-          
+
           {/* Left: Brand & Status */}
           <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-left">
             <button
@@ -53,10 +48,10 @@ export function Footer() {
               <span>Available for full-time roles & freelance</span>
             </div>
           </div>
-          
+
           {/* Center: Interactive Terminal Pill */}
           <div className="flex justify-center">
-            <button 
+            <button
               onClick={openTerminal}
               className="group flex items-center gap-3 px-5 py-3 rounded-full bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--surface2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.15)] transition-all duration-300 cursor-pointer"
             >
@@ -71,13 +66,13 @@ export function Footer() {
               </span>
             </button>
           </div>
-          
+
           {/* Right: Magnetic Social Circles */}
           <div className="flex items-center justify-center md:justify-end gap-4">
             <Magnetic>
-              <Link 
-                href="https://github.com/7337475780" 
-                target="_blank" 
+              <Link
+                href="https://github.com/7337475780"
+                target="_blank"
                 className="w-11 h-11 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--surface2)] hover:-translate-y-1 transition-all duration-300 shadow-sm"
                 aria-label="GitHub"
               >
@@ -85,9 +80,9 @@ export function Footer() {
               </Link>
             </Magnetic>
             <Magnetic>
-              <Link 
-                href="https://www.linkedin.com/in/tharun-chandra-lingala-bba016309/" 
-                target="_blank" 
+              <Link
+                href="https://www.linkedin.com/in/tharun-chandra-lingala-bba016309/"
+                target="_blank"
                 className="w-11 h-11 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--surface2)] hover:-translate-y-1 transition-all duration-300 shadow-sm"
                 aria-label="LinkedIn"
               >
@@ -95,9 +90,9 @@ export function Footer() {
               </Link>
             </Magnetic>
             <Magnetic>
-              <Link 
-                href="https://leetcode.com/u/Tharunchandralingala" 
-                target="_blank" 
+              <Link
+                href="https://leetcode.com/u/Tharunchandralingala"
+                target="_blank"
                 className="w-11 h-11 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] hover:bg-[var(--surface2)] hover:-translate-y-1 transition-all duration-300 shadow-sm"
                 aria-label="LeetCode"
               >

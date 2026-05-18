@@ -71,7 +71,7 @@ export function Navbar() {
 
   return (
     <>
-      <header 
+      <header
         className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-5xl h-[64px] rounded-full bg-[var(--surface)]/75 backdrop-blur-2xl border border-[var(--border2)] transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.2),_0_0_30px_rgba(37,99,235,0.15)] flex items-center justify-between px-6 py-2 group"
         style={{
           boxShadow: "inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(37,99,235,0.15)",
@@ -100,10 +100,9 @@ export function Navbar() {
                 <button
                   key={link.name}
                   onClick={() => scrollToSection(link.href)}
-                  className={`relative px-4 py-2 font-dm-sans text-[14px] transition-all duration-300 rounded-full z-10 cursor-pointer ${
-                    isActive
-                      ? "text-[var(--accent)] font-bold tracking-wide drop-shadow-sm scale-105"
-                      : "text-[var(--muted2)] hover:text-[var(--text)]"
+                  className={`relative px-4 py-2 font-dm-sans text-[14px] transition-all duration-300 rounded-full z-10 cursor-pointer ${isActive
+                    ? "text-[var(--accent)] font-bold tracking-wide drop-shadow-sm scale-105"
+                    : "text-[var(--muted2)] hover:text-[var(--text)]"
                     }`}
                 >
                   {isActive && (
@@ -181,8 +180,7 @@ export function Navbar() {
                     <button
                       key={link.name}
                       onClick={() => { scrollToSection(link.href); setMobileMenuOpen(false); }}
-                      className={`relative px-4 py-3 font-dm-sans text-[16px] rounded-[12px] z-10 transition-all duration-300 w-full text-left cursor-pointer ${
-                        isActive ? "text-[var(--accent)] font-bold tracking-wide" : "text-[var(--text)]"
+                      className={`relative px-4 py-3 font-dm-sans text-[16px] rounded-[12px] z-10 transition-all duration-300 w-full text-left cursor-pointer ${isActive ? "text-[var(--accent)] font-bold tracking-wide" : "text-[var(--text)]"
                         }`}
                     >
                       {isActive && (
@@ -225,18 +223,18 @@ export function Navbar() {
             transition={{ type: "spring", stiffness: 400, damping: 28 }}
             onClick={scrollToTop}
             aria-label="Go to top"
-            className="fixed bottom-8 right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden bg-[var(--surface)]/70 backdrop-blur-xl border border-[var(--border2)] shadow-2xl hover:scale-110 transition-all duration-300 group"
+            className="fixed bottom-[5.5rem] right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden bg-black/[0.08] dark:bg-white/[0.05] border border-black/25 dark:border-white/20 shadow-[0_10px_25px_rgba(0,0,0,0.15)] dark:shadow-2xl hover:scale-110 transition-all duration-300 group backdrop-blur-md dark:backdrop-blur-none"
             style={{
-              boxShadow: "inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -2px 3px rgba(0,0,0,0.1), 0 10px 25px rgba(0,0,0,0.15), 0 0 20px rgba(37,99,235,0.2)",
+              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.7), inset 0 -4px 6px rgba(37, 99, 235, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.1)",
             }}
             whileHover={{ scale: 1.12 }}
             whileTap={{ scale: 0.92 }}
           >
             {/* Top Specular Rim Reflection */}
-            <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full" />
+            <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-black/20 dark:via-white/80 to-transparent rounded-full" />
             {/* Bottom Ambient Glow */}
-            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent rounded-full" />
-            <ChevronUp size={22} className="text-[var(--accent)] drop-shadow-md font-bold group-hover:-translate-y-0.5 transition-transform duration-300" />
+            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-blue-600/40 dark:via-[var(--accent)]/40 to-transparent rounded-full" />
+            <ChevronUp size={22} className="text-blue-600 dark:text-[var(--accent)] drop-shadow-sm dark:drop-shadow-md font-bold group-hover:-translate-y-0.5 transition-transform duration-300" />
           </motion.button>
         )}
       </AnimatePresence>

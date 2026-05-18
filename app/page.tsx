@@ -16,18 +16,18 @@ import { Certifications } from "@/components/sections/Certifications";
 import { Blog } from "@/components/sections/Blog";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
-import { StoryNavigation } from "@/components/StoryNavigation";
+import { AIChatWidget } from "@/components/ui/AIChatWidget";
 
 export default function Home() {
   return (
     <>
       <ProgressBar />
       <TerminalModal />
-      <StoryNavigation />
-      
+      <AIChatWidget />
+
       <AvailabilityBanner />
       <Navbar />
-      
+
       <main>
         <Hero />
         <TechMarquee />
@@ -40,7 +40,7 @@ export default function Home() {
         <Blog />
         <Contact />
       </main>
-      
+
       <Footer />
     </>
   );

@@ -22,7 +22,7 @@ export function AvailabilityBanner() {
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-[95] flex items-center justify-center animate-fade-up pointer-events-none">
-      <div 
+      <div
         className="w-full relative flex items-center justify-center py-2.5 px-12 rounded-full overflow-hidden bg-[var(--surface)]/80 backdrop-blur-2xl border border-[var(--border2)] shadow-2xl transition-all duration-300 group pointer-events-auto cursor-default hover:border-[var(--green)]/40"
         style={{
           boxShadow: "inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(16,185,129,0.2)",
