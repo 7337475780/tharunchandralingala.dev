@@ -42,7 +42,7 @@ export function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-[calc(100vh-64px)] flex items-center pt-10 pb-20 px-[8%] overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center pt-28 md:pt-32 pb-20 px-[8%] overflow-hidden">
 
       {/* Background Radial Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[var(--accent)] opacity-10 blur-[120px] pointer-events-none" />

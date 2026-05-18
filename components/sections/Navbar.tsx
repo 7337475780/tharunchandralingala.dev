@@ -71,8 +71,18 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-[80] h-[64px] bg-[var(--surface)]/80 backdrop-blur-[20px] border-b border-[var(--border)] transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+      <header 
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-5xl h-[64px] rounded-full bg-[var(--surface)]/75 backdrop-blur-2xl border border-[var(--border2)] transition-all duration-300 shadow-[0_10px_40px_rgba(0,0,0,0.2),_0_0_30px_rgba(37,99,235,0.15)] flex items-center justify-between px-6 py-2 group"
+        style={{
+          boxShadow: "inset 0 2px 3px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.2), 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(37,99,235,0.15)",
+        }}
+      >
+        {/* Top Specular Rim Reflection */}
+        <span className="absolute top-[1px] left-12 right-12 h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full pointer-events-none opacity-80" />
+        {/* Bottom Ambient Glow */}
+        <span className="absolute bottom-[1px] left-16 right-16 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent rounded-full pointer-events-none" />
+
+        <div className="w-full h-full flex items-center justify-between">
 
           {/* Logo */}
           <button
@@ -142,7 +152,7 @@ export function Navbar() {
             </button>
 
             <button
-              className="md:hidden text-[var(--text)] p-1"
+              className="md:hidden text-[var(--text)] p-1 cursor-pointer"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
             >
@@ -155,13 +165,16 @@ export function Navbar() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="md:hidden absolute top-[64px] left-0 w-full bg-[var(--surface)]/95 backdrop-blur-xl border-b border-[var(--border)] overflow-hidden"
+              className="md:hidden fixed top-[84px] left-4 right-4 z-[95] bg-[var(--surface)]/95 backdrop-blur-2xl border border-[var(--border2)] rounded-3xl overflow-hidden shadow-2xl p-4"
+              style={{
+                boxShadow: "inset 0 2px 3px rgba(255,255,255,0.4), 0 20px 40px rgba(0,0,0,0.4)",
+              }}
             >
-              <div className="px-6 py-4 flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
                 {navLinks.map((link) => {
                   const isActive = activeSection === link.href.substring(1);
                   return (
