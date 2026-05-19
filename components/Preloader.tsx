@@ -15,7 +15,7 @@ interface Particle {
 function Digit({ val }: { val: string }) {
   const sizeStyle = { fontSize: "clamp(34px, 5vw, 58px)" };
   return (
-    <div 
+    <div
       className="relative h-[1.1em] overflow-hidden flex items-center justify-center w-[0.58em] select-none pointer-events-none"
       style={sizeStyle}
     >
@@ -39,7 +39,7 @@ export function Preloader() {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"loading" | "reveal" | "done">("loading");
   const [particles, setParticles] = useState<Particle[]>([]);
-  
+
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function Preloader() {
 
       if (current >= 100) {
         clearInterval(interval);
-        
+
         // Particle burst on load complete (if not reduced motion)
         if (!prefersReducedMotion) {
           const burst: Particle[] = Array.from({ length: 26 }).map((_, idx) => {
@@ -70,8 +70,8 @@ export function Preloader() {
                 idx % 3 === 0
                   ? "var(--accent)"
                   : idx % 3 === 1
-                  ? "var(--accent2, #818cf8)"
-                  : "#ffffff",
+                    ? "var(--accent2, #818cf8)"
+                    : "#ffffff",
             };
           });
           setParticles(burst);
@@ -100,7 +100,7 @@ export function Preloader() {
 
   return (
     <div className="fixed inset-0 z-[99999] pointer-events-none">
-      
+
       {/* === PHASE: LOADING === */}
       <AnimatePresence>
         {phase === "loading" && (
@@ -189,10 +189,10 @@ export function Preloader() {
                   filter: prefersReducedMotion
                     ? "drop-shadow(0 0 15px rgba(37,99,235,0.4))"
                     : [
-                        "drop-shadow(0 0 15px rgba(37,99,235,0.4))",
-                        "drop-shadow(0 0 60px rgba(99,102,241,0.85))",
-                        "drop-shadow(0 0 15px rgba(37,99,235,0.4))",
-                      ],
+                      "drop-shadow(0 0 15px rgba(37,99,235,0.4))",
+                      "drop-shadow(0 0 60px rgba(99,102,241,0.85))",
+                      "drop-shadow(0 0 15px rgba(37,99,235,0.4))",
+                    ],
                   backgroundPosition: ["0% center", "200% center", "0% center"],
                 }}
                 transition={{
@@ -468,9 +468,9 @@ export function Preloader() {
                   filter: prefersReducedMotion
                     ? "none"
                     : [
-                        "drop-shadow(2px 0px 0px rgba(239, 68, 68, 0.45)) drop-shadow(-2px 0px 0px rgba(59, 130, 246, 0.45))",
-                        "drop-shadow(0px 0px 0px rgba(239, 68, 68, 0)) drop-shadow(0px 0px 0px rgba(59, 130, 246, 0))",
-                      ],
+                      "drop-shadow(2px 0px 0px rgba(239, 68, 68, 0.45)) drop-shadow(-2px 0px 0px rgba(59, 130, 246, 0.45))",
+                      "drop-shadow(0px 0px 0px rgba(239, 68, 68, 0)) drop-shadow(0px 0px 0px rgba(59, 130, 246, 0))",
+                    ],
                 }}
                 transition={{
                   opacity: { duration: 0.3, delay: prefersReducedMotion ? 0.8 : 1.3 },
@@ -500,7 +500,7 @@ export function Preloader() {
           </motion.div>
         )}
       </AnimatePresence>
-      
+
     </div>
   );
 }
