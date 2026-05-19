@@ -52,7 +52,7 @@ export async function POST(req: Request) {
           const data = await geminiRes.json();
           const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           if (reply) {
-            return NextResponse.json({ reply });
+            return NextResponse.json({ success: true, reply });
           }
         }
       } catch (geminiErr) {
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
       reply = "Hello! I am Tharun AI. Tharun is a Frontend-Focused Full Stack Developer skilled in Next.js 15, React 19, and real-time distributed backends. You can ask me about his tech stack, featured projects, LeetCode metrics, remote availability, or how to book an interview slot!";
     }
 
-    return NextResponse.json({ reply });
+    return NextResponse.json({ success: true, reply });
   } catch (err) {
     return NextResponse.json(
       { error: "An internal server error occurred while processing your request." },

@@ -217,13 +217,13 @@ export function Navbar() {
         {showGoTop && (
           <motion.button
             key="go-top"
-            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.5, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 28 }}
             onClick={scrollToTop}
             aria-label="Go to top"
-            className="fixed bottom-[5.5rem] right-8 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden bg-black/[0.08] dark:bg-white/[0.05] border border-black/25 dark:border-white/20 shadow-[0_10px_25px_rgba(0,0,0,0.15)] dark:shadow-2xl hover:scale-110 transition-all duration-300 group backdrop-blur-md dark:backdrop-blur-none"
+            className="fixed bottom-[5.5rem] right-6 z-[90] w-12 h-12 rounded-full flex items-center justify-center cursor-pointer overflow-hidden bg-black/[0.08] dark:bg-white/[0.05] border border-black/25 dark:border-white/20 shadow-[0_10px_25px_rgba(0,0,0,0.15)] dark:shadow-2xl hover:scale-110 transition-all duration-300 group backdrop-blur-md dark:backdrop-blur-none"
             style={{
               boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.7), inset 0 -4px 6px rgba(37, 99, 235, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.1)",
             }}

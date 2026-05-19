@@ -70,9 +70,9 @@ export function Skills() {
             </span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--green)]/30 to-transparent" />
           </div>
-          <TextReveal 
-            text="What I build with" 
-            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4" 
+          <TextReveal
+            text="What I build with"
+            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4"
           />
           <p className="font-dm-sans text-[16px] text-[var(--muted2)]">
             Technologies I use to build production-ready applications.
@@ -86,27 +86,27 @@ export function Skills() {
                 {/* Subtle top glow on hover */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm rounded-full" />
 
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`w-8 h-8 rounded-[12px] flex items-center justify-center ${group.color}`}>
-                  {group.icon}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`w-8 h-8 rounded-[12px] flex items-center justify-center ${group.color}`}>
+                    {group.icon}
+                  </div>
+                  <h3 className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--text)] font-bold">
+                    {group.title}
+                  </h3>
                 </div>
-                <h3 className="font-mono text-[12px] uppercase tracking-[0.1em] text-[var(--text)] font-bold">
-                  {group.title}
-                </h3>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {group.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="bg-[var(--bg2)] border border-[var(--border)] font-mono text-[12px] text-[var(--muted2)] rounded-[100px] px-3 py-1"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
-              
-              <div className="flex flex-wrap gap-2 pt-2">
-                {group.skills.map((skill) => (
-                  <span 
-                    key={skill} 
-                    className="bg-[var(--bg2)] border border-[var(--border)] font-mono text-[12px] text-[var(--muted2)] rounded-[100px] px-3 py-1"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </MagicCard>
+            </MagicCard>
           ))}
         </div>
       </div>

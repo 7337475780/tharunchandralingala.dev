@@ -31,9 +31,9 @@ export function About() {
           </span>
           <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--accent)]/30 to-transparent" />
         </div>
-        <TextReveal 
-          text="Passionate about building things that matter" 
-          className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-12" 
+        <TextReveal
+          text="Passionate about building things that matter"
+          className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-12"
         />
 
         <div className="grid lg:grid-cols-[55%_45%] gap-12 lg:gap-20">
@@ -70,9 +70,9 @@ export function About() {
 
             <MagicCard>
               <div className="p-4 flex items-center justify-center overflow-hidden w-full h-full">
-                <img 
-                  src="https://github-readme-stats.vercel.app/api?username=7337475780&show_icons=true&theme=transparent&hide_border=true&title_color=4f8ef7&icon_color=00d4ff&text_color=94a3b8" 
-                  alt="GitHub Contribution Stats" 
+                <img
+                  src="https://github-readme-stats.vercel.app/api?username=7337475780&show_icons=true&theme=transparent&hide_border=true&title_color=4f8ef7&icon_color=00d4ff&text_color=94a3b8"
+                  alt="GitHub Contribution Stats"
                   className="w-full h-auto object-contain"
                   loading="lazy"
                 />

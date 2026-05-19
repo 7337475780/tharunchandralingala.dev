@@ -120,7 +120,7 @@ export function Preloader() {
 
               {/* Animated Label Stream */}
               <div className="font-mono text-[11px] uppercase tracking-[0.3em] flex gap-1 overflow-hidden select-none">
-                {["L","O","A","D","I","N","G"," ","P","O","R","T","F","O","L","I","O"].map((char, i) => char === " " ? <span key={i} className="w-2" /> : (
+                {["L", "O", "A", "D", "I", "N", "G", " ", "P", "O", "R", "T", "F", "O", "L", "I", "O"].map((char, i) => char === " " ? <span key={i} className="w-2" /> : (
                   <motion.span
                     key={i}
                     initial={{ y: 8, opacity: 0 }}

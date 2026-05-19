@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { NoiseBackground } from "@/components/NoiseBackground";
 import { Preloader } from "@/components/Preloader";
+import { AdminShortcut } from "@/components/AdminShortcut";
 import SmoothScroll from "@/components/SmoothScroll";
 
 const syne = Syne({
@@ -68,10 +69,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} antialiased selection:bg-accent/30 selection:text-text-main`}>
+      <body suppressHydrationWarning className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} antialiased selection:bg-accent/30 selection:text-text-main`}>
         <ThemeProvider>
           <NoiseBackground />
           <CustomCursor />
+          <AdminShortcut />
           <Preloader />
           <SmoothScroll>
             {children}

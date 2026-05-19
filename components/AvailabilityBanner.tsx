@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, ArrowUpRight } from "lucide-react";
 
 export function AvailabilityBanner() {
   const [isVisible, setIsVisible] = useState(false);
@@ -38,8 +38,11 @@ export function AvailabilityBanner() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--green)] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--green)]"></span>
           </div>
-          <span className="font-mono text-[13px] font-medium text-[var(--text)] group-hover:text-[var(--green)] transition-colors text-center">
-            Currently open to full-time roles — Let's talk!
+          <span className="font-mono text-[13px] font-medium text-[var(--text)] transition-colors text-center flex items-center gap-2">
+            <span className="group-hover:text-[var(--green)] transition-colors">Currently open to full-time roles —</span>
+            <a href="https://cal.com/tharunlingala6" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-[var(--border2)] hover:decoration-[var(--accent)] hover:text-[var(--accent)] transition-all cursor-pointer flex items-center gap-1">
+              Schedule a Live Call <ArrowUpRight size={13} />
+            </a>
           </span>
         </div>
         <button

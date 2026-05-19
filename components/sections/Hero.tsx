@@ -9,6 +9,7 @@ import { Magnetic } from "@/components/Magnetic";
 export function Hero() {
   const fullText = "Hi, I'm Tharun Chandra Lingala";
   const [isTypingDone, setIsTypingDone] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState("/resume.pdf");
 
   // 3D Card State
   const cardRef = useRef<HTMLDivElement>(null);
@@ -21,6 +22,14 @@ export function Hero() {
       setIsTypingDone(true);
     }, fullText.length * 50 + 500);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Fetch live resume URL from Vercel Blob
+  useEffect(() => {
+    fetch("/api/resume")
+      .then((r) => r.json())
+      .then((d) => { if (d.success && d.url) setResumeUrl(d.url); })
+      .catch(() => {/* keep fallback */ });
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -122,10 +131,11 @@ export function Hero() {
             </Magnetic>
             <Magnetic strength={0.2}>
               <Link
-                href="/resume.pdf"
+                href={resumeUrl}
                 target="_blank"
+                download="Tharun_Chandra_Lingala_Resume.pdf"
                 onClick={() => console.log('resume_download')}
-                className="flex items-center justify-center h-[48px] rounded-[12px] border border-[var(--border2)] text-[var(--text)] font-dm-sans font-medium px-8 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
+                className="flex items-center justify-center gap-2 h-[48px] rounded-[12px] border border-[var(--border2)] text-[var(--text)] font-dm-sans font-medium px-8 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
               >
                 Download Resume
               </Link>

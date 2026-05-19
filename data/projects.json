@@ -1,0 +1,60 @@
+[
+  {
+    "id": "weconnect",
+    "title": "WeConnect",
+    "subtitle": "Real-Time Distributed Messaging Platform",
+    "description": "A production-style real-time messaging platform with instant chat, typing indicators, read receipts, and live presence. Built with distributed state management and sub-100ms Socket.IO communication.",
+    "stack": ["Next.js", "TypeScript", "Convex", "Socket.IO", "Clerk", "Zustand", "Node.js"],
+    "tags": ["real-time", "featured"],
+    "badge": { "text": "Featured", "color": "bg-[#2563eb] text-white" },
+    "gridClass": "md:col-span-2 md:row-span-2 border-t-2 border-t-[#00d4ff]",
+    "github": "https://github.com/7337475780",
+    "live": "https://github.com/7337475780"
+  },
+  {
+    "id": "aimagix",
+    "title": "aiMagix",
+    "subtitle": "AI-Powered Image Generation Platform",
+    "description": "A modern AI image generation platform with intelligent prompt enhancement, HD image downloads, secure auth flows, and persistent generation history. Built with Next.js 15 and Gemini API.",
+    "stack": ["Next.js 15", "Gemini API", "Supabase", "Prisma", "NextAuth", "Node.js"],
+    "tags": ["ai", "featured"],
+    "badge": { "text": "AI", "color": "bg-[#10b981] text-white" },
+    "gridClass": "md:col-span-2 md:row-span-2",
+    "github": "https://github.com/7337475780",
+    "live": "https://github.com/7337475780"
+  },
+  {
+    "id": "webgenie",
+    "title": "webGenie",
+    "subtitle": "AI-Powered Website Generator",
+    "description": "Converts natural language prompts into complete website layouts and AST component trees using Gemini and OpenAI APIs. Modular React frontend with full mobile responsiveness.",
+    "stack": ["Next.js", "React", "TypeScript", "Gemini", "OpenAI"],
+    "tags": ["ai"],
+    "gridClass": "md:col-span-1",
+    "github": "https://github.com/7337475780",
+    "live": "https://github.com/7337475780"
+  },
+  {
+    "id": "instaload",
+    "title": "InstaLoad & TubeFetcher",
+    "subtitle": "Containerized Media Download Platforms",
+    "description": "Full-stack media downloading apps for Instagram Reels and YouTube videos. Containerized with Docker, deployed on Railway, with secure auth and persistent download history.",
+    "stack": ["Next.js", "Node.js", "Docker", "Railway", "Supabase", "Clerk"],
+    "tags": ["full stack"],
+    "gridClass": "md:col-span-2",
+    "github": "https://github.com/7337475780",
+    "live": "https://github.com/7337475780"
+  },
+  {
+    "id": "cardioai",
+    "title": "Cardio AI",
+    "subtitle": "Heart Disease Prediction — Team Lead",
+    "description": "Led a 3-person team building production-grade ML predictive models for heart disease risk analysis. Integrated trained models with PostgreSQL patient record management.",
+    "stack": ["Python", "scikit-learn", "PostgreSQL", "ML", "pandas"],
+    "tags": ["ai", "ml"],
+    "badge": { "text": "Team Lead", "color": "bg-[#f59e0b] text-white" },
+    "gridClass": "md:col-span-1",
+    "github": "https://github.com/7337475780",
+    "live": "https://github.com/7337475780"
+  }
+]

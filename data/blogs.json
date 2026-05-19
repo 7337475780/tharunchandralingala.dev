@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "title": "Why I stopped using useEffect for everything and what I do instead",
+    "url": "https://dev.to/tharunchandralingala/why-i-stopped-using-useeffect-for-everything-and-what-i-do-instead-1997",
+    "tag_list": [
+      "webdev",
+      "javascript",
+      "react",
+      "typescript"
+    ],
+    "reading_time_minutes": 4,
+    "published_at": "2026-05-18T05:40:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "TypeScript types I wish I knew when I started",
+    "url": "https://dev.to/tharunchandralingala/typescript-types-i-wish-i-knew-when-i-started-3d55",
+    "tag_list": [
+      "webdev",
+      "beginners",
+      "javascript",
+      "typescript"
+    ],
+    "reading_time_minutes": 7,
+    "published_at": "2026-05-18T06:31:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "From 0 to 434+ LeetCode Solved: Patterns & Graph Optimization",
+    "url": "https://dev.to/tharunchandra",
+    "tag_list": [
+      "algorithms",
+      "leetcode",
+      "dsa",
+      "career"
+    ],
+    "reading_time_minutes": 6,
+    "published_at": "2026-03-15T09:15:00Z"
+  }
+]

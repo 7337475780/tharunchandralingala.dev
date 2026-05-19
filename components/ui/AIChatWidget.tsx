@@ -2,47 +2,82 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Bot, Sparkles, Loader2 } from "lucide-react";
+import { X, Send, Bot, Sparkles, Copy, Check, CornerDownLeft } from "lucide-react";
 import { Magnetic } from "@/components/Magnetic";
 
-interface Message {
+interface ChatMessage {
+  id: string;
   sender: "ai" | "user";
   text: string;
   time: string;
 }
 
-const SUGGESTED_CHIPS = [
-  "What is your tech stack?",
-  "Can you work remotely?",
-  "What are your salary expectations?",
-  "Book an interview",
+interface ChatHistoryItem {
+  role: "user" | "model";
+  text: string;
+}
+
+const INITIAL_CHIPS = [
+  "What's your strongest skill?",
+  "Are you available for hire?",
+  "Tell me about WeConnect",
+  "What's your notice period?",
 ];
 
 export function AIChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [showText, setShowText] = useState(true);
-  const [messages, setMessages] = useState<Message[]>([
+  const [showTooltip, setShowTooltip] = useState(true);
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
+      id: "init-1",
       sender: "ai",
-      text: "Hello! I am Tharun AI, an autonomous recruiter assistant. Ask me anything about Tharun's Next.js 15 architectures, real-time messaging latency, or remote availability!",
+      text: "Hello! I am Tharun's portfolio assistant. Ask me anything about his full-stack expertise, WeConnect real-time messaging, or availability for roles!",
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
+  const [history, setHistory] = useState<ChatHistoryItem[]>([
+    {
+      role: "model",
+      text: "Hello! I am Tharun's portfolio assistant. Ask me anything about his full-stack expertise, WeConnect real-time messaging, or availability for roles!",
+    }
+  ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [hasSentMessage, setHasSentMessage] = useState(false);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-collapse trigger text after 5 seconds
+  // Auto-dismiss tooltip after 4 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowText(false);
-    }, 5000);
+      setShowTooltip(false);
+    }, 4000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-scroll to bottom of messages and focus input
+  // Global Keyboard Shortcut: Ctrl + / or Ctrl + Space to toggle AI Chat
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === "/" || e.code === "Space")) {
+        // Do not trigger Ctrl+Space if actively typing in an input or textarea
+        if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName || "") && e.code === "Space") {
+          return;
+        }
+        e.preventDefault();
+        setIsOpen((prev) => {
+          if (!prev) setShowTooltip(false);
+          return !prev;
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Auto-scroll to bottom of messages
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -50,41 +85,29 @@ export function AIChatWidget() {
     }
   }, [messages, isLoading, isOpen]);
 
-  // Keyboard and custom event listener
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "i") {
-        e.preventDefault();
-        setIsOpen((prev) => !prev);
-      } else if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
-        e.preventDefault();
-        setIsOpen(true);
-      } else if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleCustomOpen = () => setIsOpen(true);
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("open-ai-chat", handleCustomOpen);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("open-ai-chat", handleCustomOpen);
-    };
-  }, [isOpen]);
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   const handleSend = async (textToSend?: string) => {
     const prompt = (textToSend || inputMessage).trim();
     if (!prompt || isLoading) return;
 
-    const userMsg: Message = {
+    setHasSentMessage(true);
+    const msgId = `msg-${Date.now()}`;
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    const userMsg: ChatMessage = {
+      id: msgId,
       sender: "user",
       text: prompt,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      time: timeStr,
     };
 
     setMessages((prev) => [...prev, userMsg]);
+    setHistory((prev) => [...prev, { role: "user", text: prompt }]);
     if (!textToSend) setInputMessage("");
     setIsLoading(true);
 
@@ -92,206 +115,250 @@ export function AIChatWidget() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: prompt }),
+        body: JSON.stringify({
+          message: prompt,
+          history: history,
+        }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const aiMsg: Message = {
+      const data = await response.json();
+
+      if (response.ok && (data.success || data.reply)) {
+        const aiMsgId = `ai-${Date.now()}`;
+        const fullReply = data.reply || "Hmm, received empty response.";
+
+        // Typewriter Effect Simulation
+        const aiMsgPlaceholder: ChatMessage = {
+          id: aiMsgId,
           sender: "ai",
-          text: data.reply || "I encountered an error retrieving data.",
+          text: "",
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
-        setMessages((prev) => [...prev, aiMsg]);
+
+        setMessages((prev) => [...prev, aiMsgPlaceholder]);
+        setIsLoading(false);
+
+        let currentCharIndex = 0;
+        const words = fullReply.split(" ");
+        let currentText = "";
+
+        const interval = setInterval(() => {
+          if (currentCharIndex < words.length) {
+            currentText += (currentCharIndex > 0 ? " " : "") + words[currentCharIndex];
+            setMessages((prev) =>
+              prev.map((m) => (m.id === aiMsgId ? { ...m, text: currentText } : m))
+            );
+            currentCharIndex++;
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+          } else {
+            clearInterval(interval);
+            setHistory((prev) => [...prev, { role: "model", text: fullReply }]);
+          }
+        }, 40);
+
       } else {
-        setMessages((prev) => [...prev, { sender: "ai", text: "Communication endpoint unreachable. Please email directly at tharunlingala6@gmail.com.", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
+        setIsLoading(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `err-${Date.now()}`,
+            sender: "ai",
+            text: "Hmm, something went wrong. Try again.",
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+        ]);
       }
     } catch (err) {
-      setMessages((prev) => [...prev, { sender: "ai", text: "Network timeout. Please email directly at tharunlingala6@gmail.com.", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }]);
-    } finally {
       setIsLoading(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `err-${Date.now()}`,
+          sender: "ai",
+          text: "Hmm, something went wrong. Try again.",
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
     }
   };
 
   return (
     <>
-      {/* Floating Expanding Trigger Pill (Liquid Glass Droplet - Positioned below Go To Top at bottom-8 right-8) */}
-      <div className="fixed bottom-8 right-8 z-[95] flex items-center">
-        <Magnetic strength={0.15}>
-          <motion.button
-            layout
-            onClick={() => setIsOpen(true)}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="group relative flex items-center justify-center h-12 rounded-full bg-black/[0.08] dark:bg-white/[0.05] border border-black/25 dark:border-white/20 text-black dark:text-white font-dm-sans font-bold text-[14px] tracking-wide shadow-[0_10px_25px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.4),_0_0_25px_rgba(0,212,255,0.2)] hover:shadow-[0_15px_35px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_25px_50px_rgba(0,0,0,0.6),_0_0_35px_rgba(0,212,255,0.4)] transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-md dark:backdrop-blur-none"
-            style={{
-              borderRadius: 9999,
-              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.7), inset 0 -4px 6px rgba(0, 212, 255, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.1)",
-            }}
-            animate={{
-              width: isHovered || showText ? "auto" : 48,
-              paddingLeft: isHovered || showText ? 20 : 0,
-              paddingRight: isHovered || showText ? 20 : 0,
-            }}
-            transition={{ type: "spring", stiffness: 400, damping: 28 }}
-            aria-label="Ask Tharun AI"
-          >
-            {/* Top Specular Rim Reflection */}
-            <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-black/20 dark:via-white/80 to-transparent rounded-full pointer-events-none" />
-            {/* Bottom Ambient Cyan Glow */}
-            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-blue-600/40 dark:via-[#00d4ff]/60 to-transparent rounded-full pointer-events-none" />
-
-            <motion.div layout className="flex items-center justify-center w-12 h-12 flex-shrink-0 text-blue-600 dark:text-[#00d4ff]">
-              <Bot size={22} className="animate-pulse drop-shadow-[0_0_6px_rgba(37,99,235,0.4)] dark:drop-shadow-[0_0_8px_rgba(0,212,255,0.8)]" />
+      {/* Floating Button Trigger (Positioned bottom-6 right-6, above scroll-to-top) */}
+      <div className="fixed bottom-6 right-6 z-[100] flex items-center gap-3">
+        <AnimatePresence>
+          {showTooltip && !isOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: 20, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white font-dm-sans text-[13px] font-bold shadow-xl border border-white/20 whitespace-nowrap flex items-center gap-2 drop-shadow-lg pointer-events-none"
+            >
+              <span>Ask me anything about Tharun ✨</span>
+              <span className="px-1.5 py-0.5 rounded-md bg-white/20 text-[10px] font-mono ml-1 opacity-90 border border-white/30">Ctrl + /</span>
             </motion.div>
+          )}
+        </AnimatePresence>
 
-            <AnimatePresence>
-              {(isHovered || showText) && (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "auto" }}
-                  exit={{ opacity: 0, width: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center gap-1.5 whitespace-nowrap pr-1 font-extrabold text-black dark:text-white"
-                >
-                  <span>Ask AI</span>
-                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-blue-600/15 dark:bg-[#00d4ff]/10 border border-blue-600/30 dark:border-[#00d4ff]/30 text-blue-600 dark:text-[#00d4ff]">
-                    ⌘I
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
+        <Magnetic strength={0.2}>
+          <motion.button
+            onClick={() => {
+              setIsOpen((prev) => !prev);
+              setShowTooltip(false);
+            }}
+            className="w-12 h-12 rounded-full relative overflow-hidden bg-white/[0.05] backdrop-blur-2xl border border-white/25 text-[#00d4ff] flex items-center justify-center shadow-[0_10px_30px_rgba(0,212,255,0.35)] hover:shadow-[0_10px_45px_rgba(0,212,255,0.7)] hover:scale-110 transition-all duration-300 cursor-pointer group"
+            style={{
+              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.8), inset 0 -4px 8px rgba(0, 212, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2)",
+            }}
+            whileTap={{ scale: 0.92 }}
+            aria-label="Toggle AI Chat Drawer"
+          >
+            {/* Top Specular Water Rim Reflection */}
+            <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full pointer-events-none" />
+            {/* Bottom Liquid Cyan Glow */}
+            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-[#00d4ff]/60 to-transparent rounded-full pointer-events-none" />
+
+            <Bot size={22} className="animate-pulse group-hover:rotate-12 group-hover:scale-110 transition-all text-[#00d4ff] drop-shadow-[0_0_10px_rgba(0,212,255,0.8)] z-10" />
           </motion.button>
         </Magnetic>
       </div>
 
-      {/* Centered Spotlight Command Modal */}
+      {/* Floating Slide-up Chat Drawer (Not a modal) */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            {/* Dark Dimming Backdrop Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-black/75 backdrop-blur-md"
-              onClick={() => setIsOpen(false)}
-            />
-
-            {/* Modal Window */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              className="relative w-full max-w-[560px] h-[520px] max-h-[85vh] rounded-[32px] bg-[#16161f]/95 backdrop-blur-3xl border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.9),_inset_0_2px_3px_rgba(255,255,255,0.2)] flex flex-col z-[210] overflow-hidden"
-            >
-              {/* Specular Top Rim */}
-              <span className="absolute top-[1px] left-12 right-12 h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full opacity-80 pointer-events-none" />
-
-              {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10 bg-[#1e1e2e]/60 backdrop-blur-md">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#00d4ff]/10 border border-[#00d4ff]/30 flex items-center justify-center text-[#00d4ff]">
-                    <Bot size={22} />
-                  </div>
-                  <div>
-                    <div className="font-syne text-[18px] font-[700] text-white flex items-center gap-2">
-                      Tharun AI <Sparkles size={14} className="text-[#00d4ff]" />
-                    </div>
-                    <div className="flex items-center gap-1.5 font-mono text-[11px] text-[#10b981]">
-                      <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" /> Recruiter Knowledge Base Active
-                    </div>
-                  </div>
+          <motion.div
+            initial={{ opacity: 0, y: 100, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 100, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+            className="fixed bottom-0 right-0 md:bottom-24 md:right-6 z-[105] w-full md:w-[440px] h-[88vh] md:h-[600px] max-h-[800px] bg-[#0b0b12]/95 backdrop-blur-3xl border border-white/15 rounded-t-3xl md:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.8),_0_0_30px_rgba(0,212,255,0.2)] flex flex-col overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-[#161622]/80 backdrop-blur-md">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#00d4ff]/20 to-[#2563eb]/20 border border-[#00d4ff]/40 flex items-center justify-center text-[#00d4ff]">
+                  <Bot size={22} />
                 </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
-                  aria-label="Close Chat Modal"
-                >
-                  <X size={16} />
-                </button>
+                <div>
+                  <h3 className="font-syne text-[16px] font-bold text-white flex items-center gap-1.5">
+                    <span>Ask Tharun's AI</span>
+                    <Sparkles size={14} className="text-[#00d4ff]" />
+                  </h3>
+                  <p className="font-mono text-[11px] text-[#10b981] flex items-center gap-1 mt-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
+                    <span>Powered by Gemini &middot; Ask me anything</span>
+                  </p>
+                </div>
               </div>
 
-              {/* Message Area */}
-              <div
-                className="flex-1 overflow-y-auto p-5 flex flex-col gap-4"
-                onClick={() => inputRef.current?.focus()}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer"
+                aria-label="Close Chat Drawer"
               >
-                {messages.map((msg, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={`flex flex-col max-w-[85%] ${msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Chat Messages Scroll Area */}
+            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4" data-lenis-prevent>
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex flex-col max-w-[85%] ${msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
+                    }`}
+                >
+                  <div
+                    className={`p-3.5 rounded-2xl font-dm-sans text-[14px] leading-relaxed shadow-md relative group ${msg.sender === "user"
+                      ? "bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white rounded-br-none font-medium"
+                      : "bg-[#161622] text-white/90 border border-white/10 rounded-bl-none font-normal"
                       }`}
                   >
-                    <div
-                      className={`p-4 rounded-2xl font-dm-sans text-[14px] leading-relaxed shadow-md ${msg.sender === "user"
-                        ? "bg-gradient-to-r from-[#2563eb] to-[#00d4ff] text-white rounded-br-none font-medium"
-                        : "bg-[#1e1e2e]/90 text-white border border-white/10 rounded-bl-none font-normal"
-                        }`}
-                    >
-                      {msg.text}
-                    </div>
-                    <span className="font-mono text-[10px] text-[#64748b] mt-1 px-1">{msg.time}</span>
-                  </motion.div>
-                ))}
+                    {msg.text || (
+                      <span className="w-2 h-4 bg-[#00d4ff] inline-block animate-pulse" />
+                    )}
 
-                {isLoading && (
-                  <div className="flex items-center gap-2 text-[#00d4ff] font-mono text-[12px] p-2">
-                    <Loader2 size={16} className="animate-spin" /> Fetching knowledge packet...
+                    {/* Copy Button for AI Messages */}
+                    {msg.sender === "ai" && msg.text && (
+                      <button
+                        onClick={() => handleCopy(msg.id, msg.text)}
+                        className="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-[#1e1e2e] hover:bg-[#2e2e3e] border border-white/20 rounded-lg text-white/80 hover:text-white shadow-md cursor-pointer"
+                        title="Copy Message"
+                      >
+                        {copiedId === msg.id ? <Check size={12} className="text-[#10b981]" /> : <Copy size={12} />}
+                      </button>
+                    )}
                   </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
+                  <span className="font-mono text-[10px] text-white/40 mt-1 px-1">{msg.time}</span>
+                </motion.div>
+              ))}
 
-              {/* Suggested Chips Area */}
-              <div className="px-5 py-3 border-t border-white/10 bg-[#0a0a0f]/40 flex flex-wrap gap-2 overflow-x-auto">
-                {SUGGESTED_CHIPS.map((chip) => (
-                  <button
-                    key={chip}
-                    onClick={() => handleSend(chip)}
-                    disabled={isLoading}
-                    className="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-mono text-[11px] text-[#94a3b8] hover:text-white transition-colors whitespace-nowrap cursor-pointer disabled:opacity-50 flex items-center gap-1"
-                  >
-                    <span>{chip}</span> &rarr;
-                  </button>
-                ))}
-              </div>
+              {/* Typing Indicator */}
+              {isLoading && (
+                <div className="flex items-center gap-1.5 p-3 rounded-2xl bg-[#161622] border border-white/10 text-white/60 w-fit rounded-bl-none font-mono text-[13px]">
+                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
 
-              {/* Input Form */}
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSend();
-                }}
-                className="p-4 border-t border-white/10 bg-[#1e1e2e]/60 flex items-center gap-3"
-              >
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Ask AI anything (e.g. salary, tech stack)..."
-                  disabled={isLoading}
-                  className="flex-1 h-11 bg-[#0a0a0f]/80 border border-white/10 rounded-xl px-4 text-white font-dm-sans text-[14px] placeholder:text-[#64748b] focus:outline-none focus:border-[#00d4ff] focus:ring-2 focus:ring-[#00d4ff]/20 transition-all duration-300"
-                  autoComplete="off"
-                />
-                <button
-                  type="submit"
-                  disabled={!inputMessage.trim() || isLoading}
-                  className="w-11 h-11 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#00d4ff] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer shadow-md flex-shrink-0"
-                  aria-label="Send Message"
+            {/* Suggested Question Chips (Fade out after first message) */}
+            <AnimatePresence>
+              {!hasSentMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+                  className="px-4 py-2.5 bg-[#161622]/60 border-t border-white/10 flex flex-wrap gap-2 overflow-x-auto"
+                  data-lenis-prevent
                 >
-                  <Send size={18} />
-                </button>
-              </form>
-            </motion.div>
-          </div>
+                  {INITIAL_CHIPS.map((chip) => (
+                    <button
+                      key={chip}
+                      onClick={() => handleSend(chip)}
+                      disabled={isLoading}
+                      className="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 font-mono text-[11px] text-white/70 hover:text-white transition-colors whitespace-nowrap cursor-pointer disabled:opacity-50 flex items-center gap-1"
+                    >
+                      <span>{chip}</span> <CornerDownLeft size={10} className="text-[#00d4ff]" />
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Text Input & Send Bar */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
+              className="p-3 border-t border-white/10 bg-[#161622] flex items-center gap-2.5"
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Ask about skills, projects, notice period..."
+                disabled={isLoading}
+                className="flex-1 h-11 bg-black/50 border border-white/10 rounded-xl px-4 text-white font-dm-sans text-[14px] placeholder:text-white/30 focus:outline-none focus:border-[#00d4ff] transition-all"
+                autoComplete="off"
+              />
+              <button
+                type="submit"
+                disabled={!inputMessage.trim() || isLoading}
+                className="w-11 h-11 rounded-xl bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer shadow-lg flex-shrink-0"
+                aria-label="Send Message"
+              >
+                <Send size={18} />
+              </button>
+            </form>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

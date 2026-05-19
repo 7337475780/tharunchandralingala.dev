@@ -40,6 +40,21 @@ export function TerminalModal() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
+  // Listener for custom event dispatched from Footer button
+  useEffect(() => {
+    const handleOpenModal = () => {
+      setIsOpen(true);
+      setHistory([
+        {
+          command: "",
+          output: "Welcome to Tharun's terminal. Type 'help' for available commands.",
+        },
+      ]);
+    };
+    window.addEventListener("open-terminal-modal", handleOpenModal as EventListener);
+    return () => window.removeEventListener("open-terminal-modal", handleOpenModal as EventListener);
+  }, []);
+
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();

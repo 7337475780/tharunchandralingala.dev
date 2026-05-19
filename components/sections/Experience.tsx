@@ -29,15 +29,15 @@ export function Experience() {
           <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
             // experience
           </span>
-          <TextReveal 
-            text="Where I've worked" 
-            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4" 
+          <TextReveal
+            text="Where I've worked"
+            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4"
           />
         </div>
 
         <div className="relative">
           {/* Animated Line */}
-          <div 
+          <div
             className="absolute left-[15px] top-2 bottom-0 w-[2px] bg-gradient-to-b from-[var(--accent)] to-[var(--green)] transition-all duration-1000 ease-out z-0"
             style={{ height: `${lineHeight}%` }}
           />
@@ -48,7 +48,7 @@ export function Experience() {
             {/* Entry 1 */}
             <div className="relative pl-12 md:pl-16">
               <div className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-[var(--surface)] border-2 border-[var(--accent)] flex items-center justify-center z-10 shadow-[0_0_10px_var(--accent)]" />
-              
+
               <h3 className="font-syne text-[22px] font-[700] text-[var(--text)] mb-1">
                 AI & Machine Learning Virtual Intern
               </h3>
@@ -58,7 +58,7 @@ export function Experience() {
               <p className="font-mono text-[12px] text-[var(--muted2)] mb-6">
                 Apr 2025 &ndash; Jun 2025 &middot; Remote
               </p>
-              
+
               <ul className="space-y-3 font-dm-sans text-[15px] text-[var(--muted)] leading-relaxed list-none">
                 <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
                   Completed a structured 10-week AI/ML program sponsored by Google for Developers, applying ML to real-world engineering problems.
@@ -78,7 +78,7 @@ export function Experience() {
             {/* Entry 2 */}
             <div className="relative pl-12 md:pl-16">
               <div className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-[var(--surface)] border-2 border-[var(--green)] flex items-center justify-center z-10 shadow-[0_0_10px_var(--green)]" />
-              
+
               <h3 className="font-syne text-[22px] font-[700] text-[var(--text)] mb-1">
                 Team Lead &mdash; Cardio AI (Heart Disease Prediction)
               </h3>
@@ -88,7 +88,7 @@ export function Experience() {
               <p className="font-mono text-[12px] text-[var(--muted2)] mb-6">
                 Jan 2024 &ndash; Present
               </p>
-              
+
               <ul className="space-y-3 font-dm-sans text-[15px] text-[var(--muted)] leading-relaxed list-none">
                 <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
                   Led a team of 3+ developers building production-grade ML models for heart disease risk prediction, owning task allocation, code reviews, and all technical decisions.

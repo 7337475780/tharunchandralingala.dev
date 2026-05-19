@@ -125,14 +125,14 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
   --bg: #0a0a0f;
   --bg2: #111118;
-  --surface: #16161f;
+  --surface: #161622;
   --surface2: #1e1e2e;
-  --accent: #4f8ef7;
+  --accent: #00d4ff;
   --accent2: #00d4ff;
   --accent3: #a78bfa;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --muted2: #94a3b8;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --muted2: rgba(255, 255, 255, 0.6);
   --border: rgba(255, 255, 255, 0.07);
   --border2: rgba(255, 255, 255, 0.13);
   --green: #10b981;
@@ -216,4 +216,40 @@ h6,
     transform: none;
     transition: none;
   }
+}
+
+/* Autofill Stylings to prevent browser defaults from breaking design */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+html[data-theme="light"] input:-webkit-autofill,
+html[data-theme="light"] textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #161622 inset !important;
+}
+
+/* Custom form theme styling rules to override browser defaults */
+.form-input,
+.form-textarea {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border2) !important;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--muted) !important;
+  opacity: 0.65 !important;
 }
