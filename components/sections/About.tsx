@@ -27,7 +27,7 @@ export function About() {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[var(--accent)] font-bold tracking-[0.15em] uppercase">
-            // WHO I AM
+            WHO I AM
           </span>
           <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--accent)]/30 to-transparent" />
         </div>

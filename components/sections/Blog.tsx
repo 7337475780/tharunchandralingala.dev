@@ -74,7 +74,7 @@ export function Blog() {
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-4">
             <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[var(--accent)] font-bold tracking-[0.15em] uppercase">
-              CHAPTER 05 // DEV NOTES & CMS AUDIT
+              DEV NOTES
             </span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--accent)]/30 to-transparent" />
           </div>
@@ -83,7 +83,7 @@ export function Blog() {
             className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)] mb-4"
           />
           <p className="font-dm-sans text-[16px] text-[var(--muted2)] flex items-center gap-2">
-            <span>I write about things I build, bugs I solve, and architectures. Live synchronized with CMS DB.</span>
+            <span>I write about things I build, bugs I solve, and architectures.</span>
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           </p>
         </div>

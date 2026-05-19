@@ -131,7 +131,7 @@ export function Projects() {
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-4">
             <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--yellow)]/10 border border-[var(--yellow)]/30 text-[var(--yellow)] font-bold tracking-[0.15em] uppercase">
-              // PROJECTS AS SYSTEMS
+              PROJECTS AS SYSTEMS
             </span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--yellow)]/30 to-transparent" />
           </div>
