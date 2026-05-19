@@ -11,10 +11,14 @@ interface Particle {
   color: string;
 }
 
-// Single digit slot-machine component
+// Single digit slot-machine component - FIXED font-size clipping container bug
 function Digit({ val }: { val: string }) {
+  const sizeStyle = { fontSize: "clamp(34px, 5vw, 58px)" };
   return (
-    <div className="relative h-[1.1em] overflow-hidden flex items-center justify-center w-[0.55em] select-none pointer-events-none">
+    <div 
+      className="relative h-[1.1em] overflow-hidden flex items-center justify-center w-[0.58em] select-none pointer-events-none"
+      style={sizeStyle}
+    >
       <AnimatePresence mode="popLayout">
         <motion.span
           key={val}
@@ -23,7 +27,6 @@ function Digit({ val }: { val: string }) {
           exit={{ y: "-100%", opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="absolute font-syne font-bold text-white leading-none"
-          style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
         >
           {val}
         </motion.span>
@@ -74,7 +77,7 @@ export function Preloader() {
           setParticles(burst);
         }
 
-        // Pause at 100% briefly, then reveal
+        // Pause at 100% briefly, then reveal SVG mask
         setTimeout(() => {
           setPhase("reveal");
           setTimeout(handleRevealComplete, 1600);
@@ -97,6 +100,7 @@ export function Preloader() {
 
   return (
     <div className="fixed inset-0 z-[99999] pointer-events-none">
+      
       {/* === PHASE: LOADING === */}
       <AnimatePresence>
         {phase === "loading" && (
@@ -272,7 +276,7 @@ export function Preloader() {
               transition={{ duration: 0.4 }}
               className="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-4 pointer-events-none select-none z-10"
             >
-              {/* Digit Slide Machine */}
+              {/* Digit Slide Machine - FIXED clipping wrapper bug */}
               <div className="flex items-end gap-0.5">
                 <div className="flex select-none leading-none items-center justify-center">
                   {progress.toString().split("").map((digit, i, arr) => (
@@ -280,8 +284,8 @@ export function Preloader() {
                   ))}
                 </div>
                 <span
-                  className="font-syne font-bold text-[var(--accent)] mb-1 leading-none align-baseline"
-                  style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginLeft: "4px" }}
+                  className="font-syne font-bold text-[var(--accent)] mb-1 leading-none align-baseline font-extrabold"
+                  style={{ fontSize: "clamp(20px, 2vw, 28px)", marginLeft: "4px" }}
                 >
                   %
                 </span>
@@ -404,7 +408,7 @@ export function Preloader() {
         {phase === "reveal" && (
           <motion.div
             key="reveal-screen"
-            className="absolute inset-0 z-50"
+            className="absolute inset-0 z-50 pointer-events-auto"
             initial={{ opacity: 1 }}
             onAnimationComplete={handleRevealComplete}
           >
@@ -496,6 +500,7 @@ export function Preloader() {
           </motion.div>
         )}
       </AnimatePresence>
+      
     </div>
   );
 }
