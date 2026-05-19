@@ -120,6 +120,10 @@ html[data-theme="light"] {
   --green: #059669;
   --yellow: #d97706;
   --red: #dc2626;
+  --accent-rgb: 37, 99, 235;
+  --card-vignette: rgba(240, 244, 255, 0.55);
+  --blob-blend: multiply;
+  --blob-opacity: 0.35;
 }
 
 html[data-theme="dark"] {
@@ -138,6 +142,10 @@ html[data-theme="dark"] {
   --green: #10b981;
   --yellow: #f59e0b;
   --red: #ef4444;
+  --accent-rgb: 0, 212, 255;
+  --card-vignette: rgba(0, 0, 0, 0.6);
+  --blob-blend: screen;
+  --blob-opacity: 0.85;
 }
 
 html {

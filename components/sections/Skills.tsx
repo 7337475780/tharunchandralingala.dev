@@ -66,7 +66,7 @@ export function Skills() {
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-4">
             <span className="font-mono text-[12px] px-3 py-1 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/30 text-[var(--green)] font-bold tracking-[0.15em] uppercase">
-              CHAPTER 02 // PROBLEMS I SOLVE
+              // PROBLEMS I SOLVE
             </span>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--green)]/30 to-transparent" />
           </div>
