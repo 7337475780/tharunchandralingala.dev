@@ -34,9 +34,9 @@ export function Certifications() {
           <span className="font-mono text-[12px] text-[var(--accent)] tracking-[0.15em] uppercase mb-4 block">
             // certifications
           </span>
-          <TextReveal 
-            text="Credentials" 
-            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)]" 
+          <TextReveal
+            text="Credentials"
+            className="font-syne text-[36px] md:text-[44px] font-[800] text-[var(--text)]"
           />
         </div>
 

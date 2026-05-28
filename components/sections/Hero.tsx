@@ -113,9 +113,8 @@ export function Hero() {
 
           {/* H2 */}
           <h2
-            className={`font-dm-sans text-[20px] md:text-[24px] font-[300] text-[var(--muted2)] mb-6 transition-opacity duration-400 ease-in-out ${
-              isTypingDone ? "opacity-100" : "opacity-0"
-            }`}
+            className={`font-dm-sans text-[20px] md:text-[24px] font-[300] text-[var(--muted2)] mb-6 transition-opacity duration-400 ease-in-out ${isTypingDone ? "opacity-100" : "opacity-0"
+              }`}
           >
             Frontend-Focused Full Stack Developer
           </h2>
@@ -398,9 +397,9 @@ export function Hero() {
                 prefersReducedMotion
                   ? {}
                   : {
-                      y: [-4, 4, -4],
-                      x: isHovering ? 8 : 0,
-                    }
+                    y: [-4, 4, -4],
+                    x: isHovering ? 8 : 0,
+                  }
               }
               transition={{
                 y: { repeat: Infinity, duration: 2.5, ease: "easeInOut" },
@@ -419,9 +418,9 @@ export function Hero() {
                 prefersReducedMotion
                   ? {}
                   : {
-                      y: [4, -4, 4],
-                      x: isHovering ? 8 : 0,
-                    }
+                    y: [4, -4, 4],
+                    x: isHovering ? 8 : 0,
+                  }
               }
               transition={{
                 y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
@@ -440,9 +439,9 @@ export function Hero() {
                 prefersReducedMotion
                   ? {}
                   : {
-                      y: [-3, 5, -3],
-                      x: isHovering ? -8 : 0,
-                    }
+                    y: [-3, 5, -3],
+                    x: isHovering ? -8 : 0,
+                  }
               }
               transition={{
                 y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" },
@@ -461,9 +460,9 @@ export function Hero() {
                 prefersReducedMotion
                   ? {}
                   : {
-                      y: [3, -5, 3],
-                      x: isHovering ? -8 : 0,
-                    }
+                    y: [3, -5, 3],
+                    x: isHovering ? -8 : 0,
+                  }
               }
               transition={{
                 y: { repeat: Infinity, duration: 4, ease: "easeInOut" },
