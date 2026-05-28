@@ -57,15 +57,12 @@ export function Navbar() {
     const id = href.substring(1);
     const el = document.getElementById(id);
     if (el) {
-      // Update URL explicitly starting from pathname to prevent hash stacking
-      history.replaceState(null, "", window.location.pathname + "#" + id);
       // Smooth scroll to element
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   const scrollToTop = () => {
-    history.replaceState(null, "", window.location.pathname);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

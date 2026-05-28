@@ -16,7 +16,6 @@ export function Footer() {
     const id = href.substring(1);
     const el = document.getElementById(id);
     if (el) {
-      history.replaceState(null, "", window.location.pathname + "#" + id);
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };

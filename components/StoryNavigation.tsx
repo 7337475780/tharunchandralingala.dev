@@ -74,7 +74,6 @@ export function StoryNavigation() {
   const scrollToChapter = (targetId: string) => {
     const el = document.getElementById(targetId);
     if (el) {
-      history.replaceState(null, "", window.location.pathname + "#" + targetId);
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };

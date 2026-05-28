@@ -145,7 +145,6 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => {
-                  history.replaceState(null, "", window.location.pathname + "#projects");
                   document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="flex items-center justify-center h-[48px] rounded-[12px] bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)] text-white font-dm-sans font-medium px-8 hover:-translate-y-[2px] hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all cursor-pointer border-0"
