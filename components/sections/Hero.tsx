@@ -10,6 +10,7 @@ export function Hero() {
   const fullText = "Hi, I'm Tharun Chandra Lingala";
   const [isTypingDone, setIsTypingDone] = useState(false);
   const [resumeUrl, setResumeUrl] = useState("/resume.pdf");
+  const [startTyping, setStartTyping] = useState(false);
 
   // 3D Card State
   const cardRef = useRef<HTMLDivElement>(null);
@@ -24,12 +25,29 @@ export function Hero() {
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ((window as any).preloaderComplete) {
+        setStartTyping(true);
+      } else {
+        const handleComplete = () => {
+          setStartTyping(true);
+        };
+        window.addEventListener("preloaderComplete", handleComplete);
+        return () => {
+          window.removeEventListener("preloaderComplete", handleComplete);
+        };
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!startTyping) return;
     // Set typing done after the animation duration (approx 30 chars * 0.05s = 1.5s)
     const timer = setTimeout(() => {
       setIsTypingDone(true);
     }, fullText.length * 50 + 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [startTyping]);
 
   // Fetch live resume URL from Vercel Blob
   useEffect(() => {
@@ -97,18 +115,20 @@ export function Hero() {
               <motion.span
                 key={index}
                 initial={{ display: "none" }}
-                animate={{ display: "inline" }}
+                animate={startTyping ? { display: "inline" } : { display: "none" }}
                 transition={{ delay: index * 0.05 }}
                 className={index >= 8 ? "text-gradient" : ""}
               >
                 {char}
               </motion.span>
             ))}
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="inline-block w-[3px] h-[0.9em] bg-[var(--accent)] ml-1 align-middle"
-            />
+            {startTyping && (
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                className="inline-block w-[3px] h-[0.9em] bg-[var(--accent)] ml-1 align-middle"
+              />
+            )}
           </h1>
 
           {/* H2 */}

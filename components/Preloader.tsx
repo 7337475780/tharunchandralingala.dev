@@ -92,6 +92,10 @@ export function Preloader() {
   // Once reveal animation ends, remove preloader
   const handleRevealComplete = () => {
     setPhase("done");
+    if (typeof window !== "undefined") {
+      (window as any).preloaderComplete = true;
+      window.dispatchEvent(new CustomEvent("preloaderComplete"));
+    }
     document.body.style.overflow = "";
   };
 
