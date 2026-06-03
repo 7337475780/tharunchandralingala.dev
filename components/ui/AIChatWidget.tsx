@@ -192,7 +192,7 @@ export function AIChatWidget() {
               initial={{ opacity: 0, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white font-dm-sans text-[13px] font-bold shadow-xl border border-white/20 whitespace-nowrap flex items-center gap-2 drop-shadow-lg pointer-events-none"
+              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[var(--accent2)] to-[var(--accent3)] text-white font-dm-sans text-[13px] font-bold shadow-xl border border-white/20 whitespace-nowrap flex items-center gap-2 drop-shadow-lg pointer-events-none"
             >
               <span>Ask me anything about Tharun ✨</span>
               <span className="px-1.5 py-0.5 rounded-md bg-white/20 text-[10px] font-mono ml-1 opacity-90 border border-white/30">Ctrl + /</span>
@@ -206,9 +206,9 @@ export function AIChatWidget() {
               setIsOpen((prev) => !prev);
               setShowTooltip(false);
             }}
-            className="w-12 h-12 rounded-full relative overflow-hidden bg-white/[0.05] backdrop-blur-2xl border border-white/25 text-[#00d4ff] flex items-center justify-center shadow-[0_10px_30px_rgba(0,212,255,0.35)] hover:shadow-[0_10px_45px_rgba(0,212,255,0.7)] hover:scale-110 transition-all duration-300 cursor-pointer group"
+            className="w-12 h-12 rounded-full relative overflow-hidden bg-[var(--surface)]/10 backdrop-blur-2xl border border-[var(--border2)] text-[var(--accent)] flex items-center justify-center shadow-[0_10px_30px_rgba(var(--accent-rgb),0.35)] hover:shadow-[0_10px_45px_rgba(var(--accent-rgb),0.7)] hover:scale-110 transition-all duration-300 cursor-pointer group"
             style={{
-              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.8), inset 0 -4px 8px rgba(0, 212, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2)",
+              boxShadow: "inset 0 2px 4px rgba(255, 255, 255, 0.8), inset 0 -4px 8px rgba(var(--accent-rgb), 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2)",
             }}
             whileTap={{ scale: 0.92 }}
             aria-label="Toggle AI Chat Drawer"
@@ -216,9 +216,9 @@ export function AIChatWidget() {
             {/* Top Specular Water Rim Reflection */}
             <span className="absolute top-[1px] left-3 right-3 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent rounded-full pointer-events-none" />
             {/* Bottom Liquid Cyan Glow */}
-            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-[#00d4ff]/60 to-transparent rounded-full pointer-events-none" />
+            <span className="absolute bottom-[1px] left-3 right-3 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)]/60 to-transparent rounded-full pointer-events-none" />
 
-            <Bot size={22} className="animate-pulse group-hover:rotate-12 group-hover:scale-110 transition-all text-[#00d4ff] drop-shadow-[0_0_10px_rgba(0,212,255,0.8)] z-10" />
+            <Bot size={22} className="animate-pulse group-hover:rotate-12 group-hover:scale-110 transition-all text-[var(--accent)] drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.8)] z-10" />
           </motion.button>
         </Magnetic>
       </div>
@@ -231,18 +231,18 @@ export function AIChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 350, damping: 30 }}
-            className="fixed bottom-0 right-0 md:bottom-24 md:right-6 z-[105] w-full md:w-[440px] h-[88vh] md:h-[600px] max-h-[800px] bg-[#0b0b12]/95 backdrop-blur-3xl border border-white/15 rounded-t-3xl md:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.8),_0_0_30px_rgba(0,212,255,0.2)] flex flex-col overflow-hidden"
+            className="fixed bottom-0 right-0 md:bottom-24 md:right-6 z-[105] w-full md:w-[440px] h-[88vh] md:h-[600px] max-h-[800px] bg-[var(--surface)]/95 backdrop-blur-3xl border border-[var(--border)] rounded-t-3xl md:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.4),_0_0_30px_rgba(var(--accent-rgb),0.2)] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-[#161622]/80 backdrop-blur-md">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--border)] bg-[var(--surface2)]/80 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#00d4ff]/20 to-[#2563eb]/20 border border-[#00d4ff]/40 flex items-center justify-center text-[#00d4ff]">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent3)]/20 border border-[var(--accent)]/40 flex items-center justify-center text-[var(--accent)]">
                   <Bot size={22} />
                 </div>
                 <div>
-                  <h3 className="font-syne text-[16px] font-bold text-white flex items-center gap-1.5">
+                  <h3 className="font-syne text-[16px] font-bold text-[var(--text)] flex items-center gap-1.5">
                     <span>Ask Tharun's AI</span>
-                    <Sparkles size={14} className="text-[#00d4ff]" />
+                    <Sparkles size={14} className="text-[var(--accent)]" />
                   </h3>
                   <p className="font-mono text-[11px] text-[#10b981] flex items-center gap-1 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
@@ -253,7 +253,7 @@ export function AIChatWidget() {
 
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-[var(--border)] hover:bg-[var(--border2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                 aria-label="Close Chat Drawer"
               >
                 <X size={16} />
@@ -273,35 +273,35 @@ export function AIChatWidget() {
                 >
                   <div
                     className={`p-3.5 rounded-2xl font-dm-sans text-[14px] leading-relaxed shadow-md relative group ${msg.sender === "user"
-                      ? "bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white rounded-br-none font-medium"
-                      : "bg-[#161622] text-white/90 border border-white/10 rounded-bl-none font-normal"
+                      ? "bg-gradient-to-r from-[var(--accent)] to-[var(--accent3)] text-white rounded-br-none font-medium"
+                      : "bg-[var(--surface2)] text-[var(--text)] border border-[var(--border)] rounded-bl-none font-normal"
                       }`}
                   >
                     {msg.text || (
-                      <span className="w-2 h-4 bg-[#00d4ff] inline-block animate-pulse" />
+                      <span className="w-2 h-4 bg-[var(--accent)] inline-block animate-pulse" />
                     )}
 
                     {/* Copy Button for AI Messages */}
                     {msg.sender === "ai" && msg.text && (
                       <button
                         onClick={() => handleCopy(msg.id, msg.text)}
-                        className="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-[#1e1e2e] hover:bg-[#2e2e3e] border border-white/20 rounded-lg text-white/80 hover:text-white shadow-md cursor-pointer"
+                        className="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-[var(--surface)] hover:bg-[var(--surface2)] border border-[var(--border2)] text-[var(--muted)] hover:text-[var(--text)] shadow-md cursor-pointer"
                         title="Copy Message"
                       >
                         {copiedId === msg.id ? <Check size={12} className="text-[#10b981]" /> : <Copy size={12} />}
                       </button>
                     )}
                   </div>
-                  <span className="font-mono text-[10px] text-white/40 mt-1 px-1">{msg.time}</span>
+                  <span className="font-mono text-[10px] text-[var(--muted)]/60 mt-1 px-1">{msg.time}</span>
                 </motion.div>
               ))}
 
               {/* Typing Indicator */}
               {isLoading && (
-                <div className="flex items-center gap-1.5 p-3 rounded-2xl bg-[#161622] border border-white/10 text-white/60 w-fit rounded-bl-none font-mono text-[13px]">
-                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="flex items-center gap-1.5 p-3 rounded-2xl bg-[var(--surface2)] border border-[var(--border)] text-[var(--muted)] w-fit rounded-bl-none font-mono text-[13px]">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-bounce" style={{ animationDelay: "300ms" }} />
                 </div>
               )}
               <div ref={messagesEndRef} />
@@ -314,7 +314,7 @@ export function AIChatWidget() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, height: 0, overflow: "hidden" }}
-                  className="px-4 py-2.5 bg-[#161622]/60 border-t border-white/10 flex flex-wrap gap-2 overflow-x-auto"
+                  className="px-4 py-2.5 bg-[var(--surface2)]/60 border-t border-[var(--border)] flex flex-wrap gap-2 overflow-x-auto"
                   data-lenis-prevent
                 >
                   {INITIAL_CHIPS.map((chip) => (
@@ -322,9 +322,9 @@ export function AIChatWidget() {
                       key={chip}
                       onClick={() => handleSend(chip)}
                       disabled={isLoading}
-                      className="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 font-mono text-[11px] text-white/70 hover:text-white transition-colors whitespace-nowrap cursor-pointer disabled:opacity-50 flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-full bg-[var(--surface)] hover:bg-[var(--surface2)] border border-[var(--border)] font-mono text-[11px] text-[var(--muted2)] hover:text-[var(--text)] transition-colors whitespace-nowrap cursor-pointer disabled:opacity-50 flex items-center gap-1"
                     >
-                      <span>{chip}</span> <CornerDownLeft size={10} className="text-[#00d4ff]" />
+                      <span>{chip}</span> <CornerDownLeft size={10} className="text-[var(--accent)]" />
                     </button>
                   ))}
                 </motion.div>
@@ -337,7 +337,7 @@ export function AIChatWidget() {
                 e.preventDefault();
                 handleSend();
               }}
-              className="p-3 border-t border-white/10 bg-[#161622] flex items-center gap-2.5"
+              className="p-3 border-t border-[var(--border)] bg-[var(--surface2)] flex items-center gap-2.5"
             >
               <input
                 ref={inputRef}
@@ -346,13 +346,13 @@ export function AIChatWidget() {
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask about skills, projects, notice period..."
                 disabled={isLoading}
-                className="flex-1 h-11 bg-black/50 border border-white/10 rounded-xl px-4 text-white font-dm-sans text-[14px] placeholder:text-white/30 focus:outline-none focus:border-[#00d4ff] transition-all"
+                className="flex-1 h-11 bg-[var(--bg)]/50 border border-[var(--border2)] rounded-xl px-4 text-[var(--text)] font-dm-sans text-[14px] placeholder:text-[var(--muted)]/50 focus:outline-none focus:border-[var(--accent)] transition-all"
                 autoComplete="off"
               />
               <button
                 type="submit"
                 disabled={!inputMessage.trim() || isLoading}
-                className="w-11 h-11 rounded-xl bg-gradient-to-r from-[#00d4ff] to-[#2563eb] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer shadow-lg flex-shrink-0"
+                className="w-11 h-11 rounded-xl bg-gradient-to-r from-[var(--accent)] to-[var(--accent3)] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer shadow-lg flex-shrink-0"
                 aria-label="Send Message"
               >
                 <Send size={18} />

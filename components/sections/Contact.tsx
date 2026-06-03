@@ -261,11 +261,10 @@ export function Contact() {
                       onChange={handleChange}
                       placeholder="John Doe"
                       disabled={status === "submitting"}
-                      className={`form-input w-full border ${
-                        errors.name
+                      className={`form-input w-full border ${errors.name
                           ? "border-red-500/80 ring-2 ring-red-500/10 focus:border-red-500"
                           : "focus:border-[#00d4ff] focus:ring-2 focus:ring-[#00d4ff]/20"
-                      } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all`}
+                        } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all`}
                     />
                     <AnimatePresence>
                       {errors.name && (
@@ -294,11 +293,10 @@ export function Contact() {
                       onChange={handleChange}
                       placeholder="john@example.com"
                       disabled={status === "submitting"}
-                      className={`form-input w-full border ${
-                        errors.email
+                      className={`form-input w-full border ${errors.email
                           ? "border-red-500/80 ring-2 ring-red-500/10 focus:border-red-500"
                           : "focus:border-[#00d4ff] focus:ring-2 focus:ring-[#00d4ff]/20"
-                      } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all`}
+                        } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all`}
                     />
                     <AnimatePresence>
                       {errors.email && (
@@ -345,11 +343,10 @@ export function Contact() {
                       placeholder="Hi Tharun, we're impressed by your portfolio and would love to schedule an interview..."
                       disabled={status === "submitting"}
                       data-lenis-prevent
-                      className={`form-textarea w-full border ${
-                        errors.message
+                      className={`form-textarea w-full border ${errors.message
                           ? "border-red-500/80 ring-2 ring-red-500/10 focus:border-red-500"
                           : "focus:border-[#00d4ff] focus:ring-2 focus:ring-[#00d4ff]/20"
-                      } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all resize-none overflow-y-auto`}
+                        } rounded-xl px-4 py-3.5 font-dm-sans text-[15px] focus:outline-none transition-all resize-none overflow-y-auto`}
                     />
                     <AnimatePresence>
                       {errors.message && (
