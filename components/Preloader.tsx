@@ -14,9 +14,10 @@ interface Particle {
 // Single digit slot-machine component - FIXED font-size clipping container bug
 function Digit({ val }: { val: string }) {
   const sizeStyle = { fontSize: "clamp(34px, 5vw, 58px)" };
+  const widthClass = val === "1" ? "w-[0.46em]" : "w-[0.75em]";
   return (
     <div
-      className="relative h-[1.1em] overflow-hidden flex items-center justify-center w-[0.58em] select-none pointer-events-none"
+      className={`relative h-[1.3em] overflow-hidden flex items-center justify-center ${widthClass} select-none pointer-events-none transition-all duration-300`}
       style={sizeStyle}
     >
       <AnimatePresence mode="popLayout">
