@@ -47,6 +47,14 @@ interface Blog {
   published_at: string;
 }
 
+interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  duration: string;
+  bullets: string[];
+}
+
 export default function AdminPage() {
   const router = useRouter();
   
@@ -58,11 +66,12 @@ export default function AdminPage() {
   const [decryptSteps, setDecryptSteps] = useState<string[]>([]);
   
   // Active Tab
-  const [activeTab, setActiveTab] = useState<"projects" | "blogs" | "resume">("projects");
+  const [activeTab, setActiveTab] = useState<"projects" | "blogs" | "experiences" | "resume">("projects");
   
   // Data states
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
   const [currentResumeUrl, setCurrentResumeUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [statusMessage, setStatusMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
@@ -70,6 +79,7 @@ export default function AdminPage() {
   // Forms states
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
+  const [editingExperience, setEditingExperience] = useState<Experience | null>(null);
   
   // Resume upload state
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -144,6 +154,11 @@ export default function AdminPage() {
       const blogData = await blogRes.json();
       if (blogData.success) setBlogs(blogData.blogs);
 
+      // Fetch experiences
+      const expRes = await fetch("/api/experience");
+      const expData = await expRes.json();
+      if (expData.success) setExperiences(expData.experiences);
+
       // Fetch resume
       const resRes = await fetch("/api/resume");
       const resData = await resRes.json();
@@ -204,6 +219,29 @@ export default function AdminPage() {
       }
     } catch (err) {
       showStatus("Network failure while saving blogs.", "error");
+    }
+  };
+
+  // Synchronize Experiences
+  const saveExperiences = async (updatedExperiences: Experience[]) => {
+    try {
+      const res = await fetch("/api/experience", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${pin}`
+        },
+        body: JSON.stringify({ experiences: updatedExperiences })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setExperiences(updatedExperiences);
+        showStatus("Experience database updated successfully! 💼", "success");
+      } else {
+        showStatus(data.error || "Failed to sync experiences.", "error");
+      }
+    } catch (err) {
+      showStatus("Network failure while saving experiences.", "error");
     }
   };
 
@@ -416,12 +454,12 @@ export default function AdminPage() {
                   CMS DASHBOARD
                 </h1>
                 <p className="text-[13px] text-white/40 mt-1">
-                  Manage projects, update blogs, or drag-and-drop secure resume binaries.
+                  Manage projects, update blogs, edit experiences, or drag-and-drop secure resume binaries.
                 </p>
               </div>
               
               {/* Workspace statistics */}
-              <div className="flex items-center gap-4 bg-[#0d0d1a] border border-white/5 p-3 rounded-2xl text-[12px] font-bold">
+              <div className="flex flex-wrap items-center gap-4 bg-[#0d0d1a] border border-white/5 p-3 rounded-2xl text-[12px] font-bold">
                 <div className="flex items-center gap-1.5 px-3 py-1 border-r border-white/5">
                   <Briefcase size={14} className="text-[#00d4ff]" />
                   <span className="text-white/60">Projects: {projects.length}</span>
@@ -429,6 +467,10 @@ export default function AdminPage() {
                 <div className="flex items-center gap-1.5 px-3 py-1 border-r border-white/5">
                   <BookOpen size={14} className="text-[#818cf8]" />
                   <span className="text-white/60">Blogs: {blogs.length}</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1 border-r border-white/5">
+                  <Activity size={14} className="text-[#10b981]" />
+                  <span className="text-white/60">Experience: {experiences.length}</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1">
                   <FileText size={14} className="text-[#c084fc]" />
@@ -438,16 +480,17 @@ export default function AdminPage() {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex gap-2 border-b border-white/5 pb-px">
-              {(["projects", "blogs", "resume"] as const).map((tab) => (
+            <div className="flex gap-2 border-b border-white/5 pb-px overflow-x-auto">
+              {(["projects", "blogs", "experiences", "resume"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => {
                     setActiveTab(tab);
                     setEditingProject(null);
                     setEditingBlog(null);
+                    setEditingExperience(null);
                   }}
-                  className={`px-6 py-3 border-b-2 text-[13px] font-bold uppercase transition-all tracking-wider font-syne ${
+                  className={`px-6 py-3 border-b-2 text-[13px] font-bold uppercase transition-all tracking-wider font-syne shrink-0 ${
                     activeTab === tab
                       ? "border-[#00d4ff] text-[#00d4ff] bg-[#00d4ff]/5"
                       : "border-transparent text-white/40 hover:text-white/80 hover:bg-white/2"
@@ -902,6 +945,213 @@ export default function AdminPage() {
                       >
                         <Save size={14} />
                         <span>SAVE ARTICLE</span>
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+
+            {/* EXPERIENCES TAB */}
+            {activeTab === "experiences" && (
+              <div className="space-y-6">
+                {!editingExperience ? (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-[18px] font-syne font-bold text-white/80 flex items-center gap-2">
+                        <Activity size={18} className="text-[#10b981]" />
+                        <span>WORK EXPERIENCES</span>
+                      </h2>
+                      <button
+                        onClick={() => setEditingExperience({
+                          id: `exp-${Date.now()}`,
+                          role: "",
+                          company: "",
+                          duration: "",
+                          bullets: []
+                        })}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-[#10b981] hover:bg-[#10b981]/80 text-[#07070d] rounded-xl font-bold transition-all text-[12px]"
+                      >
+                        <Plus size={14} />
+                        <span>ADD NEW EXPERIENCE</span>
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-4">
+                      {experiences.map((exp, index) => {
+                        const colorPalette = ["#00d4ff", "#a78bfa"];
+                        const colorPaletteNames = ["Cyan Accent", "Purple Accent"];
+                        const itemColor = colorPalette[index % colorPalette.length];
+                        const itemColorName = colorPaletteNames[index % colorPaletteNames.length];
+
+                        return (
+                          <div
+                            key={exp.id}
+                            className="bg-[#0b0b14] border border-white/5 hover:border-[#10b981]/20 rounded-2xl p-6 transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
+                          >
+                            <div className="space-y-2 flex-1">
+                              <div className="flex flex-wrap items-center gap-3">
+                                <h3 className="text-[18px] font-syne font-bold text-white">
+                                  {exp.role}
+                                </h3>
+                                <span
+                                  className="px-2 py-0.5 rounded text-[10px] uppercase font-bold border"
+                                  style={{
+                                    backgroundColor: `${itemColor}10`,
+                                    borderColor: `${itemColor}30`,
+                                    color: itemColor
+                                  }}
+                                >
+                                  Auto Color: {itemColorName}
+                                </span>
+                              </div>
+                              <p className="font-dm-sans text-[14px] text-white/60">
+                                {exp.company}
+                              </p>
+                              <p className="font-mono text-[11px] text-white/45">
+                                {exp.duration}
+                              </p>
+                            <ul className="list-disc pl-5 space-y-1 text-[12px] text-white/40 leading-relaxed font-sans mt-2">
+                              {exp.bullets.map((b, i) => (
+                                <li key={i}>{b}</li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="flex gap-2 self-end sm:self-auto shrink-0">
+                            <button
+                              onClick={() => setEditingExperience(exp)}
+                              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all"
+                            >
+                              <Edit2 size={13} />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm("Are you sure you want to delete this experience?")) {
+                                  saveExperiences(experiences.filter(e => e.id !== exp.id));
+                                }
+                              }}
+                              className="p-2 rounded-lg bg-red-500/5 hover:bg-red-500/10 border border-red-500/10 text-red-400 hover:text-red-300 transition-all"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </div>
+                        </div>
+                      )})}
+                    </div>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      // bullets parsed line-by-line from a text area
+                      const rawBullets = (document.getElementById("bullets-textarea") as HTMLTextAreaElement)?.value || "";
+                      const cleanBullets = rawBullets.split("\n").map(b => b.trim()).filter(Boolean);
+
+                      const updatedExperience = {
+                        ...editingExperience,
+                        bullets: cleanBullets
+                      };
+
+                      const alreadyExists = experiences.find(exp => exp.id === updatedExperience.id);
+                      if (alreadyExists) {
+                        saveExperiences(experiences.map(exp => exp.id === updatedExperience.id ? updatedExperience : exp));
+                      } else {
+                        saveExperiences([...experiences, updatedExperience]);
+                      }
+                      setEditingExperience(null);
+                    }}
+                    className="bg-[#0b0b14] border border-white/5 rounded-3xl p-8 space-y-6"
+                  >
+                    <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                      <h3 className="text-[18px] font-syne font-bold text-white flex items-center gap-2">
+                        <Edit2 size={16} className="text-[#10b981]" />
+                        <span>{experiences.find(exp => exp.id === editingExperience.id) ? "EDIT" : "CREATE"} EXPERIENCE</span>
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() => setEditingExperience(null)}
+                        className="p-1.5 rounded-lg bg-white/5 text-white/55 hover:text-white"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="block text-[11px] uppercase tracking-wider text-white/40 font-bold">EXPERIENCE ID (UNIQUE KEY)</label>
+                        <input
+                          type="text"
+                          value={editingExperience.id}
+                          onChange={(e) => setEditingExperience({ ...editingExperience, id: e.target.value })}
+                          className="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#10b981]/40"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="block text-[11px] uppercase tracking-wider text-white/40 font-bold">ROLE / TITLE</label>
+                        <input
+                          type="text"
+                          value={editingExperience.role}
+                          onChange={(e) => setEditingExperience({ ...editingExperience, role: e.target.value })}
+                          className="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#10b981]/40"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="block text-[11px] uppercase tracking-wider text-white/40 font-bold">COMPANY & SPONSORS</label>
+                        <input
+                          type="text"
+                          value={editingExperience.company}
+                          onChange={(e) => setEditingExperience({ ...editingExperience, company: e.target.value })}
+                          className="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#10b981]/40"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="block text-[11px] uppercase tracking-wider text-white/40 font-bold">DURATION & LOCATION</label>
+                        <input
+                          type="text"
+                          value={editingExperience.duration}
+                          onChange={(e) => setEditingExperience({ ...editingExperience, duration: e.target.value })}
+                          placeholder="e.g. Apr 2025 – Jun 2025 · Remote"
+                          className="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#10b981]/40"
+                          required
+                        />
+                      </div>
+
+
+
+                      <div className="md:col-span-2 space-y-2">
+                        <label className="block text-[11px] uppercase tracking-wider text-white/40 font-bold">BULLET POINTS (ONE PER LINE)</label>
+                        <textarea
+                          id="bullets-textarea"
+                          defaultValue={editingExperience.bullets.join("\n")}
+                          rows={6}
+                          placeholder="Type each description bullet point on a new line..."
+                          className="w-full bg-[#0d0d1a] border border-white/10 rounded-xl px-4 py-2.5 text-[13px] focus:outline-none focus:border-[#10b981]/40 leading-relaxed font-sans"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-3 pt-4 border-t border-white/5">
+                      <button
+                        type="button"
+                        onClick={() => setEditingExperience(null)}
+                        className="px-5 py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-[12px] font-bold transition-all"
+                      >
+                        CANCEL
+                      </button>
+                      <button
+                        type="submit"
+                        className="flex items-center gap-1.5 px-5 py-2.5 bg-[#10b981] hover:bg-[#10b981]/80 text-[#07070d] rounded-xl font-bold transition-all text-[12px]"
+                      >
+                        <Save size={14} />
+                        <span>SAVE EXPERIENCE</span>
                       </button>
                     </div>
                   </form>

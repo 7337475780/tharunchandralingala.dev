@@ -1,26 +1,151 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { TextReveal } from "@/components/TextReveal";
+
+interface ExperienceItem {
+  id: string;
+  role: string;
+  company: string;
+  duration: string;
+  bullets: string[];
+}
+
+const fallbackExperiences: ExperienceItem[] = [
+  {
+    id: "exp-1",
+    role: "AI & Machine Learning Virtual Intern",
+    company: "EduSkills & AICTE · Supported by Google for Developers",
+    duration: "Apr 2025 – Jun 2025 · Remote",
+    bullets: [
+      "Completed a structured 10-week AI/ML program sponsored by Google for Developers, applying ML to real-world engineering problems.",
+      "Built and evaluated supervised and unsupervised models (classification, regression, clustering) with Python and scikit-learn on real datasets.",
+      "Resolved complex data pipeline challenges including class imbalance, missing values, and noisy records via augmentation and multi-source integration.",
+      "Gained hands-on exposure to Google's AI developer ecosystem and scalable AI application development practices."
+    ]
+  },
+  {
+    id: "exp-2",
+    role: "Team Lead — Cardio AI (Heart Disease Prediction)",
+    company: "QIS College of Engineering and Technology, Andhra Pradesh",
+    duration: "Jan 2024 – Present",
+    bullets: [
+      "Led a team of 3+ developers building production-grade ML models for heart disease risk prediction, owning task allocation, code reviews, and all technical decisions.",
+      "Resolved critical data pipeline challenges through advanced augmentation and multi-source integration, improving model accuracy and generalization.",
+      "Integrated trained AI models with a PostgreSQL backend to manage patient records, bridging ML outputs with a scalable, query-optimized database layer."
+    ]
+  }
+];
+
+const colorPalette = ["var(--accent)", "var(--accent3)"];
+
+function ExperienceRow({ exp, index }: { exp: ExperienceItem; index: number }) {
+  const colorVar = colorPalette[index % colorPalette.length];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="relative pl-12 md:pl-16"
+    >
+      {/* Timeline Dot with pulsing animation when active */}
+      <motion.div
+        initial={{ scale: 0.75, boxShadow: "none" }}
+        whileInView={{ scale: 1, boxShadow: `0 0 16px ${colorVar}` }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+        className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-[var(--surface)] border-2 flex items-center justify-center z-10"
+        style={{
+          borderColor: colorVar
+        }}
+      >
+        <div
+          className="w-2.5 h-2.5 rounded-full"
+          style={{
+            backgroundColor: colorVar
+          }}
+        />
+      </motion.div>
+
+      <h3 className="font-syne text-[22px] font-[700] text-[var(--text)] mb-1">
+        {exp.role}
+      </h3>
+      <p
+        className="font-dm-sans text-[16px] font-medium mb-2 transition-colors duration-500"
+        style={{ color: colorVar }}
+      >
+        {exp.company}
+      </p>
+      <p className="font-mono text-[12px] text-[var(--muted2)] mb-6">
+        {exp.duration}
+      </p>
+
+      <ul className="space-y-3 font-dm-sans text-[15px] text-[var(--muted)] leading-relaxed list-none">
+        {exp.bullets.map((bullet, idx) => (
+          <li
+            key={idx}
+            className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]"
+          >
+            {bullet}
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
 
 export function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [lineHeight, setLineHeight] = useState(0);
+  const [experiences, setExperiences] = useState<ExperienceItem[]>(fallbackExperiences);
 
+  // Section entrance animation observer (for the page's fade-up rhythm)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           entries[0].target.classList.add("in-view");
-          setLineHeight(100);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Fetch dynamic experience data from server API
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const res = await fetch("/api/experience");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.experiences) && data.experiences.length > 0) {
+            setExperiences(data.experiences);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load CMS experiences, using local fallback.", err);
+      }
+    };
+    fetchExperiences();
+  }, []);
+
+  // Set up framer-motion scroll listener on the section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 70%", "end 90%"]
+  });
+
+  // Apply spring physics for butter-smooth animation
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 25,
+    restDelta: 0.001
+  });
 
   return (
     <section id="experience" ref={sectionRef} className="py-[100px] px-[8%] bg-[var(--bg)] animate-fade-up">
@@ -36,74 +161,28 @@ export function Experience() {
         </div>
 
         <div className="relative">
-          {/* Animated Line */}
-          <div
-            className="absolute left-[15px] top-2 bottom-0 w-[2px] bg-gradient-to-b from-[var(--accent)] to-[var(--green)] transition-all duration-1000 ease-out z-0"
-            style={{ height: `${lineHeight}%` }}
+          {/* Scroll-Linked Timeline Line */}
+          <motion.div
+            className="absolute left-[15px] top-2 bottom-0 w-[2px] z-0"
+            style={{
+              scaleY,
+              originY: 0,
+              backgroundImage: "linear-gradient(to bottom, var(--accent), var(--accent3))"
+            }}
           />
           {/* Background Line Track */}
           <div className="absolute left-[15px] top-2 bottom-0 w-[2px] bg-[var(--border)] z-[-1]" />
 
           <div className="space-y-16">
-            {/* Entry 1 */}
-            <div className="relative pl-12 md:pl-16">
-              <div className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-[var(--surface)] border-2 border-[var(--accent)] flex items-center justify-center z-10 shadow-[0_0_10px_var(--accent)]" />
-
-              <h3 className="font-syne text-[22px] font-[700] text-[var(--text)] mb-1">
-                AI & Machine Learning Virtual Intern
-              </h3>
-              <p className="font-dm-sans text-[16px] text-[var(--accent)] font-medium mb-2">
-                EduSkills & AICTE &middot; Supported by Google for Developers
-              </p>
-              <p className="font-mono text-[12px] text-[var(--muted2)] mb-6">
-                Apr 2025 &ndash; Jun 2025 &middot; Remote
-              </p>
-
-              <ul className="space-y-3 font-dm-sans text-[15px] text-[var(--muted)] leading-relaxed list-none">
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Completed a structured 10-week AI/ML program sponsored by Google for Developers, applying ML to real-world engineering problems.
-                </li>
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Built and evaluated supervised and unsupervised models (classification, regression, clustering) with Python and scikit-learn on real datasets.
-                </li>
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Resolved complex data pipeline challenges including class imbalance, missing values, and noisy records via augmentation and multi-source integration.
-                </li>
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Gained hands-on exposure to Google's AI developer ecosystem and scalable AI application development practices.
-                </li>
-              </ul>
-            </div>
-
-            {/* Entry 2 */}
-            <div className="relative pl-12 md:pl-16">
-              <div className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-[var(--surface)] border-2 border-[var(--green)] flex items-center justify-center z-10 shadow-[0_0_10px_var(--green)]" />
-
-              <h3 className="font-syne text-[22px] font-[700] text-[var(--text)] mb-1">
-                Team Lead &mdash; Cardio AI (Heart Disease Prediction)
-              </h3>
-              <p className="font-dm-sans text-[16px] text-[var(--green)] font-medium mb-2">
-                QIS College of Engineering and Technology, Andhra Pradesh
-              </p>
-              <p className="font-mono text-[12px] text-[var(--muted2)] mb-6">
-                Jan 2024 &ndash; Present
-              </p>
-
-              <ul className="space-y-3 font-dm-sans text-[15px] text-[var(--muted)] leading-relaxed list-none">
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Led a team of 3+ developers building production-grade ML models for heart disease risk prediction, owning task allocation, code reviews, and all technical decisions.
-                </li>
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Resolved critical data pipeline challenges through advanced augmentation and multi-source integration, improving model accuracy and generalization.
-                </li>
-                <li className="relative before:content-['—'] before:absolute before:left-[-20px] before:text-[var(--muted2)]">
-                  Integrated trained AI models with a PostgreSQL backend to manage patient records, bridging ML outputs with a scalable, query-optimized database layer.
-                </li>
-              </ul>
-            </div>
+            {experiences.map((exp, index) => (
+              <ExperienceRow key={exp.id} exp={exp} index={index} />
+            ))}
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+
+

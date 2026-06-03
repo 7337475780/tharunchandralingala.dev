@@ -1,0 +1,25 @@
+[
+  {
+    "id": "exp-1",
+    "role": "AI & Machine Learning Virtual Intern",
+    "company": "EduSkills & AICTE · Supported by Google for Developers",
+    "duration": "Apr 2025 – Jun 2025 · Remote",
+    "bullets": [
+      "Completed a structured 10-week AI/ML program sponsored by Google for Developers, applying ML to real-world engineering problems.",
+      "Built and evaluated supervised and unsupervised models (classification, regression, clustering) with Python and scikit-learn on real datasets.",
+      "Resolved complex data pipeline challenges including class imbalance, missing values, and noisy records via augmentation and multi-source integration.",
+      "Gained hands-on exposure to Google's AI developer ecosystem and scalable AI application development practices."
+    ]
+  },
+  {
+    "id": "exp-2",
+    "role": "Team Lead — Cardio AI (Heart Disease Prediction)",
+    "company": "QIS College of Engineering and Technology, Andhra Pradesh",
+    "duration": "Jan 2024 – Present",
+    "bullets": [
+      "Led a team of 3+ developers building production-grade ML models for heart disease risk prediction, owning task allocation, code reviews, and all technical decisions.",
+      "Resolved critical data pipeline challenges through advanced augmentation and multi-source integration, improving model accuracy and generalization.",
+      "Integrated trained AI models with a PostgreSQL backend to manage patient records, bridging ML outputs with a scalable, query-optimized database layer."
+    ]
+  }
+]

@@ -291,28 +291,29 @@ export function Preloader() {
                 </span>
               </div>
 
-              {/* Progress bar glow */}
-              <div className="h-[2px] w-[240px] bg-white/10 rounded-full overflow-hidden relative">
-                <motion.div
-                  className="absolute top-0 left-0 h-full rounded-full"
-                  style={{ background: "linear-gradient(90deg, var(--accent), var(--accent2, #818cf8))" }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.08, ease: "linear" }}
-                />
-                {!prefersReducedMotion && (
+              {/* Progress bar & glow dot unified container */}
+              <div className="relative w-[240px] h-[6px] flex items-center justify-start mt-2 pointer-events-none select-none">
+                {/* Background track & progress line */}
+                <div className="absolute inset-x-0 h-[2px] bg-white/10 rounded-full overflow-hidden">
                   <motion.div
-                    className="absolute top-0 left-0 h-full w-[60px] bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                    animate={{ x: [-60, 240] }}
-                    transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                    className="absolute top-0 left-0 h-full rounded-full"
+                    style={{ background: "linear-gradient(90deg, var(--accent), var(--accent2, #818cf8))" }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.08, ease: "linear" }}
                   />
-                )}
-              </div>
+                  {!prefersReducedMotion && (
+                    <motion.div
+                      className="absolute top-0 left-0 h-full w-[60px] bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      animate={{ x: [-60, 240] }}
+                      transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                    />
+                  )}
+                </div>
 
-              {/* Leading Edge Glow Dot */}
-              <div className="absolute h-[2px] w-[240px] pointer-events-none mt-10">
+                {/* Leading Edge Glow Dot */}
                 {progress > 0 && !prefersReducedMotion && (
                   <motion.div
-                    className="absolute w-1.5 h-1.5 rounded-full bg-white -translate-x-1/2 -translate-y-1/2 top-[-39px] z-20"
+                    className="absolute w-1.5 h-1.5 rounded-full bg-white -translate-x-1/2 -translate-y-1/2 top-1/2 z-20 pointer-events-none"
                     style={{
                       left: `${progress}%`,
                       boxShadow: "0 0 10px 3px var(--accent), 0 0 4px 1px #ffffff",
