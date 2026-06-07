@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Magnetic } from "@/components/Magnetic";
 import { MagicCard } from "@/components/MagicCard";
 import { TextReveal } from "@/components/TextReveal";
+import { ProjectCard } from "@/components/ProjectCard";
 
 const filters = ["All", "Real-Time", "AI", "Full Stack", "ML"];
 
@@ -166,74 +167,18 @@ export function Projects() {
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <MagicCard key={project.id}>
-              <div className={`flex flex-col p-6 h-full ${project.gridClass || ""}`}>
-                {/* Subtle top glow on hover */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm rounded-full" />
-                {/* Card Header with Far-Right Aligned Badge Chip */}
-                <div className="flex items-start justify-between gap-4 mb-2 w-full">
-                  <h3 className="font-syne text-[24px] font-bold text-[var(--text)]">{project.title}</h3>
-                  {project.badge && (
-                    <span
-                      className={`ml-auto flex-shrink-0 px-3 py-1 rounded-full font-mono text-[10px] uppercase tracking-wider shadow-sm ${project.badge.color}`}
-                    >
-                      {project.badge.text}
-                    </span>
-                  )}
-                </div>
-                <p className="font-mono text-[12px] text-[var(--muted2)] mb-4">{project.subtitle}</p>
-
-                <p className="font-dm-sans text-[15px] text-[var(--muted)] mb-8 flex-1 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="mt-auto flex flex-col gap-6">
-                  <div className="flex flex-wrap gap-2">
-                    {project.stack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="font-mono text-[11px] text-[var(--muted2)] bg-[var(--bg3)] border border-[var(--border)] rounded px-2.5 py-1"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-4 pt-4 border-t border-[var(--border)]">
-                    <Magnetic>
-                      <Link
-                        href={project.github || "#"}
-                        target="_blank"
-                        className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors p-2 -ml-2"
-                        aria-label="GitHub"
-                      >
-                        <FaGithub size={20} />
-                      </Link>
-                    </Magnetic>
-                    <Magnetic>
-                      <Link
-                        href={project.live || "#"}
-                        target="_blank"
-                        className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors p-2"
-                        aria-label="Live Demo"
-                      >
-                        <ExternalLink size={20} />
-                      </Link>
-                    </Magnetic>
-                    {project.id === "weconnect" && (
-                      <Link
-                        href={project.live || "#"}
-                        className="ml-auto flex items-center gap-2 font-dm-sans text-[14px] font-medium text-[var(--accent)] hover:text-[var(--accent2)] transition-colors"
-                      >
-                        Watch Demo <Play size={16} />
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </MagicCard>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              stack={project.stack}
+              tag={project.badge?.text}
+              githubUrl={project.github}
+              liveUrl={project.live}
+              index={index}
+            />
           ))}
         </div>
       </div>
